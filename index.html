@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#203746">
+<meta name="description" content="Palácios da Memória para estudo e elaboração de sentenças judiciais na magistratura.">
+<title>Palácios da Memória | Magistratura</title>
+<style>
+:root{color-scheme:light;--ink:#203746;--muted:#60727c;--teal:#246b72;--line:#d4dcd9;--paper:#f3f5f4;--gold:#b2936a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+.top{background:#fdfdfb;border-bottom:1px solid #dfe5e4}
+.top-inner{max-width:1170px;margin:auto;padding:20px 26px;display:flex;align-items:center;gap:13px}
+.mark{display:grid;place-items:center;width:44px;height:44px;border:1px solid #a8b8bd;border-radius:12px;font:26px/1 Georgia,serif;color:var(--teal)}
+.brand-name{font-size:12px;text-transform:uppercase;letter-spacing:.13em;font-weight:700}
+.brand-sub{font-size:13px;color:var(--muted)}
+main{max-width:1170px;margin:0 auto;padding:76px 26px 80px}
+.eyebrow{color:var(--teal);letter-spacing:.18em;text-transform:uppercase;font-size:12px;font-weight:750}
+h1{font:clamp(38px,5.7vw,66px)/1.1 Georgia,"Times New Roman",serif;letter-spacing:-.035em;max-width:850px;margin:16px 0 17px}
+.lead{max-width:720px;color:#536b74;font-size:17px;margin:0 0 46px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{text-decoration:none;color:inherit;background:#fdfdfb;border:1px solid #cbd6d5;border-radius:20px;display:flex;flex-direction:column;min-height:325px;overflow:hidden;box-shadow:0 11px 32px rgba(22,42,52,.04);transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:#65949b;box-shadow:0 20px 44px rgba(22,42,52,.09)}
+.card:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
+.card::before{content:"";display:block;width:100%;height:5px;background:var(--teal)}
+.card.criminal::before{background:var(--gold)}
+.card-inner{padding:32px;display:flex;flex-direction:column;flex:1}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.symbol{width:66px;height:66px;border:1px solid #c7d5d4;background:#f1f7f5;border-radius:16px;display:grid;place-items:center;font:35px Georgia,serif;color:var(--teal)}
+.criminal .symbol{color:#917449;background:#faf7f0;border-color:#ded2be}
+.status{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:750;color:#396c67;background:#e8f3ed;padding:7px 11px;border-radius:40px}
+.status.future{color:#847050;background:#f5eee1}
+h2{font:clamp(27px,3.2vw,34px)/1.16 Georgia,serif;margin:29px 0 11px}
+.card p{margin:0 0 30px;color:var(--muted);font-size:15px;max-width:400px}
+.card-bottom{margin-top:auto;border-top:1px solid #e4eae8;padding-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.card-bottom b{font-size:13px;font-weight:700}
+.arrow{font-size:24px;line-height:1;color:var(--teal)}
+.criminal .arrow{color:#917449}
+.note{border-top:1px solid var(--line);margin-top:44px;padding-top:22px;color:var(--muted);font-size:13px;max-width:850px}
+footer{padding:25px 26px;text-align:center;color:#7b8a8f;font-size:12px}
+@media(max-width:720px){main{padding:48px 20px 50px}.top-inner{padding:17px 20px}.cards{grid-template-columns:1fr;gap:16px}.card{min-height:260px}.card-inner{padding:25px}h2{margin-top:22px}.lead{margin-bottom:30px}h1{font-size:40px}}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner"><div class="mark" aria-hidden="true">§</div><div><div class="brand-name">Magistratura · Palácios da Memória</div><div class="brand-sub">Estrutura visual para sentenças judiciais</div></div></div></header>
+<main>
+<div class="eyebrow">Escolha seu percurso</div>
+<h1>Palácios da Memória</h1>
+<p class="lead">Um espaço de revisão jurídica em fluxogramas: âncoras da sentença em sequência vertical, ramificações laterais e fundamentação a um clique.</p>
+<section class="cards" aria-label="Selecionar Palácio">
+<a class="card" href="civel/" aria-label="Abrir Palácio Cível"><div class="card-inner">
+<div class="card-top"><div class="symbol" aria-hidden="true">§</div><span class="status">Disponível</span></div>
+<h2>Palácio Cível</h2>
+<p>Percorra a estrutura integral da sentença cível. Expanda âncoras, spin-offs, conceitos e referências legais sem perder de vista o fluxo principal.</p>
+<div class="card-bottom"><b>Acessar fluxograma cível</b><span class="arrow" aria-hidden="true">↗</span></div>
+</div></a>
+<a class="card criminal" href="criminal/" aria-label="Conhecer Palácio Criminal, em preparação"><div class="card-inner">
+<div class="card-top"><div class="symbol" aria-hidden="true">⚖</div><span class="status future">Em preparação</span></div>
+<h2>Palácio Criminal</h2>
+<p>Espaço reservado para a futura estrutura da sentença criminal, seguindo a mesma lógica de âncoras e expansões laterais.</p>
+<div class="card-bottom"><b>Ver área do Palácio Criminal</b><span class="arrow" aria-hidden="true">↗</span></div>
+</div></a>
+</section>
+<p class="note">Esta é uma versão de estudo em desenvolvimento. O conteúdo jurídico será aprimorado e conferido conforme a legislação, a jurisprudência e os espelhos de correção.</p>
+</main>
+<footer>Palácios da Memória · Magistratura</footer>
+</body>
+</html>

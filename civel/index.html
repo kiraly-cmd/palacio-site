@@ -339,8 +339,8 @@ function refsFromNorm(norm){
  for(let i=segments.length-1;i>=0;i--){
   const segment=segments[i];
   const special=/\b(?:Lei\s*9\.099\/95|9\.099\/95)\b/i.test(segment);
-  const explicit=segment.match(/\/(CPC|CC|CDC)\b/i);
-  const codeOnly=segment.match(/^(CPC|CC|CDC)$/i);
+  const explicit=segment.match(/\/(CPC|CC|CDC|CF)\b/i);
+  const codeOnly=segment.match(/^(CPC|CC|CDC|CF)$/i);
   if(special)inferred='L9099';else if(explicit)inferred=explicit[1].toUpperCase();else if(codeOnly)inferred=codeOnly[1].toUpperCase();
   if(!inferred)continue;
   if(codeOnly){found.push({law:inferred,codeOnly:true,seg:i});continue}

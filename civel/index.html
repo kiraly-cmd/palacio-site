@@ -79,7 +79,7 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .branch-area{display:flex;gap:var(--gap);align-items:flex-start;position:relative;min-height:0}.branch-area.empty{display:none}.branch-area:before{content:'';height:2px;width:var(--gap);position:absolute;top:41px;left:calc(-1 * var(--gap));background:#a8bdbf}.branch-area:after{content:'';width:6px;height:6px;position:absolute;top:39px;left:-5px;background:#5c8a8c;border-radius:50%}
 .branch-list{width:var(--c2);flex-shrink:0;background:white;border:1px solid #d5e0e0;border-radius:15px;box-shadow:var(--shadow);padding:13px;animation:enter .18s ease-out}
 .branch-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 3px 11px;border-bottom:1px solid #e7eceb;margin-bottom:9px}.branch-heading strong{font:normal 17px Georgia,serif}.branch-heading span{color:#839093;font-size:10px}.branch-heading small{font-size:11px;color:#7c898e}
-.spin-item{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid transparent;border-radius:10px;padding:11px 9px;margin:3px 0;width:100%;text-align:left;color:var(--ink)}.spin-item:hover{background:#f5f8f7;border-color:#dce7e7}.spin-item.active{background:#eaf4f2;border-color:#bdd4d1}.spin-symbol{font-size:14px;color:#7e9aa0;line-height:1.2}.spin-item.active .spin-symbol{color:#2c7777}.spin-item strong{display:block;font-size:12px;font-weight:680;line-height:1.35}.spin-item small{display:block;color:#78898c;font-size:10px;margin-top:5px;line-height:1.35}.spin-item em{display:block;color:#a1845d;font-style:normal;font-size:9px;margin-top:5px}
+.spin-item{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid transparent;border-radius:10px;padding:11px 9px;margin:3px 0;width:100%;text-align:left;color:var(--ink)}.spin-item:hover{background:#f5f8f7;border-color:#dce7e7}.spin-item.active{background:#eaf4f2;border-color:#bdd4d1}.spin-symbol{font-size:14px;color:#7e9aa0;line-height:1.2}.spin-item.active .spin-symbol{color:#2c7777}.spin-number{display:inline-block;color:#276f73;background:#e7f3f0;padding:2px 6px;border-radius:4px;font:700 10px/1.25 system-ui,sans-serif;white-space:nowrap;margin-bottom:4px}.spin-item.active .spin-number{background:#cee8e2}.detail-number{display:inline-block;color:#287173;font:700 12px/1.3 system-ui,sans-serif;letter-spacing:.03em;margin-right:6px}.spin-item strong{display:block;font-size:12px;font-weight:680;line-height:1.35}.spin-item small{display:block;color:#78898c;font-size:10px;margin-top:5px;line-height:1.35}.spin-item em{display:block;color:#a1845d;font-style:normal;font-size:9px;margin-top:5px}
 .detail-panel{width:var(--c3);flex-shrink:0;background:#fff;border:1px solid #cfdddc;border-radius:15px;box-shadow:var(--shadow);padding:21px 23px 23px;position:relative;animation:enter .18s ease-out}
 .detail-panel:before{position:absolute;content:'';height:2px;width:var(--gap);left:calc(-1 * var(--gap));top:31px;background:#aac5c1}.detail-panel:after{position:absolute;content:'';left:-5px;top:29px;width:6px;height:6px;background:#488b85;border-radius:50%}
 .detail-eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8b785e;font-size:10px;font-weight:750}.detail-panel h2{font:normal 22px/1.2 Georgia,serif;margin:9px 30px 7px 0;letter-spacing:-.013em}.detail-norm{font-size:11px;line-height:1.5;color:#557b7c;border-left:3px solid #8eb9b3;padding:5px 10px;background:#f1f7f6;margin:10px 0 16px}.detail-panel h3{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#78878b;margin:16px 0 8px}.detail-panel ul{padding-left:18px;margin:7px 0 12px;display:grid;gap:9px}.detail-panel li{font-size:12px;line-height:1.55;color:#344a57;padding-left:2px}.detail-panel li::marker{color:#7caaa7}.notice{background:#f7f4ed;border:1px solid #e9dfcd;color:#675745;padding:12px 13px;border-radius:9px;font-size:11px;line-height:1.55;margin-top:17px}.notice b{display:block;margin-bottom:4px;font-size:10px;letter-spacing:.04em}.subdetail{border-top:1px solid #ebeeee;padding-top:12px;margin-top:13px}.subdetail strong{font-size:12px}.subdetail small{display:block;color:#5e8585;font-size:10px;margin-top:4px}.detail-close{position:absolute;top:11px;right:12px;border:0;background:#f0f5f4;color:#547273;border-radius:7px;width:29px;height:29px;font-size:19px}
@@ -144,7 +144,12 @@ function renderReviewChecklist(s,i,value){
   'aria-label="Lembrança validada por mim" data-review-id="'+esc(rid)+'" onchange="toggleReview(this.dataset.reviewId,this.checked)"><span>'+value+'</span></label></li>';
 }
 function exportReviews(){
- const data={tipo:'palacio-civel-validacoes',versao:1,exportado_em:new Date().toISOString(),validacoes:Object.keys(reviewValues).filter(x=>REVIEW_IDS.has(x))};
+ // Relatório autocontido para reenvio ao ChatGPT: versão 1 permanece compatível com o importador.
+ const itens=DATA.flatMap(a=>a.spinoffs.flatMap((s,j)=>(s.reviewIds||[]).map((id,i)=>id&&REVIEW_IDS.has(id)?{
+  id,local:spinLabel(a,j),ficha:s.title,lembranca:s.checks?.[i]||'',validada:reviewValues[id]===true
+ }:null).filter(Boolean)));
+ const validadas=itens.filter(x=>x.validada).map(x=>x.id);
+ const data={tipo:'palacio-civel-validacoes',versao:1,exportado_em:new Date().toISOString(),validacoes:validadas,relatorio:{total:itens.length,validadas:validadas.length,pendentes:itens.length-validadas.length,lembrancas:itens}};
  const file=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
  const url=URL.createObjectURL(file),a=document.createElement('a');
  a.href=url;a.download='palacio-civel-validacoes.json';document.body.appendChild(a);a.click();a.remove();
@@ -189,11 +194,12 @@ function renderChapter(num,label){
    <div class="chapter-box"><span class="chapter-number">${esc(num)}</span>
    <span class="chapter-title">${esc(label)}</span></div></div>`;
 }
+function spinLabel(a,j){return a.num+'.'+(j+1)}
 function renderBranch(a){return `<div class="branch-list">
   <div class="branch-heading"><strong>Spin-offs</strong><span>${a.spinoffs.length} fichas</span></div>
-  ${a.spinoffs.map((s,j)=>`<button class="spin-item ${activeSpin===j?'active':''}" aria-expanded="${activeSpin===j}" onclick="toggleSpin(${j})"><span class="spin-symbol">${activeSpin===j?'◆':'◇'}</span><span><strong>${esc(s.title)}</strong>${s.inlineCitations?'':`<small>${esc(s.norm)}</small>`}${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`).join('')}
+  ${a.spinoffs.map((s,j)=>`<button class="spin-item ${activeSpin===j?'active':''}" aria-expanded="${activeSpin===j}" onclick="toggleSpin(${j})"><span class="spin-symbol">${activeSpin===j?'◆':'◇'}</span><span><span class="spin-number">${esc(spinLabel(a,j))}</span><strong>${esc(s.title)}</strong>${s.inlineCitations?'':`<small>${esc(s.norm)}</small>`}${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`).join('')}
   <p class="note">Selecione um spin-off: seus pontos de verificação se abrem à direita, sem substituir o fluxo da sentença.</p>
- </div>${activeSpin!==null?renderDetail(a.spinoffs[activeSpin]):''}${activeSpin!==null?(activeSources?renderSources():activeCase?renderCase():renderStatute()):''}`}
+ </div>${activeSpin!==null?renderDetail(a.spinoffs[activeSpin],a,activeSpin):''}${activeSpin!==null?(activeSources?renderSources():activeCase?renderCase():renderStatute()):''}`}
 function renderInlineReferences(text){
  const pattern=/(arts?\.\s*\d{1,2}\.?\d{0,3}(?:,\s*[^()\/;]{1,48})?\/(?:CPC|CC|CDC)|Súmula\s+\d+\/STJ|(?:STJ,\s*)?REsp\s+\d{1,2}\.\d{3}\.\d{3}\/[A-Z]{2}|Resolução\s+CNJ\s+n[º.]?\s*492\/2023)/gi;
  let out='',last=0,m;const raw=String(text??'');
@@ -263,8 +269,8 @@ function renderSources(){
  '<div class="charges-explain">Veja <strong>a redação utilizada pela banca</strong>, sem substituição por sínteses ou interpretações. O texto do espelho não equivale a regra jurídica universal.</div>'+
  content+'</aside>';
 }
-function renderDetail(s){const list=(x,review=false)=>`<ul>${x.map((t,i)=>review?renderReviewChecklist(s,i,s.inlineCitations?renderInlineReferences(t):esc(t)):`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;
- return `<article class="detail-panel"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleSpin(${activeSpin})">×</button><span class="detail-eyebrow">Ficha do spin-off</span><h2>${esc(s.title)}</h2>${s.inlineCitations?"":`<div class="detail-norm">${esc(s.norm)}</div>${renderLawButtons(s.norm)}`}
+function renderDetail(s,a,j){const list=(x,review=false)=>`<ul>${x.map((t,i)=>review?renderReviewChecklist(s,i,s.inlineCitations?renderInlineReferences(t):esc(t)):`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;
+ return `<article class="detail-panel"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleSpin(${activeSpin})">×</button><span class="detail-eyebrow">Ficha do spin-off</span><h2><span class="detail-number">${esc(spinLabel(a,j))}</span>${esc(s.title)}</h2>${s.inlineCitations?"":`<div class="detail-norm">${esc(s.norm)}</div>${renderLawButtons(s.norm)}`}
   ${recall?`<div class="notice"><b>Modo recordar</b>Recupere mentalmente os pontos antes de clicar em “Revelar conteúdo” no cabeçalho.</div>`:
   `${s.checks?.length?'<h3>O que verificar</h3>'+list(s.checks,true):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${list(t.checks)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
  </article>`}

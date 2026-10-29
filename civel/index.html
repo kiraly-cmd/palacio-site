@@ -308,7 +308,7 @@ function search(text){query=text;render();if(text.trim()){const first=DATA.find(
 function toggleRecall(){recall=!recall;render()}
 function keyboard(e){if(e.key==='Escape'&&activeSources!==null){closeSources()}else if(e.key==='Escape'&&activeCase!==null){closeCaseLaw()}else if(e.key==='Escape'&&activeStatute!==null){closeStatute()}else if(e.key==='Escape'&&activeSpin!==null){activeSpin=null;render()}else if(e.key==='Escape'&&activeAnchor){closeAll()}}
 
-// Registro de redações literais verificadas; outras remissões abrem a fonte oficial.
+// Textos locais registrados no acervo; conferir a redação vigente no Planalto (fonte primária).
 const STATUTES=JSON.parse(document.querySelector('#statutes').textContent);
 const CASELAW=JSON.parse(document.querySelector('#jurisprudence').textContent);
 const PUBLIC_CHARGES=JSON.parse(document.querySelector('#charges').textContent);
@@ -319,10 +319,10 @@ const DOC_NAMES={CPC:'Código de Processo Civil',CC:'Código Civil',CDC:'Código
 function officialUrl(law,n){
  if(law==='STJ'&&n===313)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=1&l=10&livre=SUMULA+INPATH%28TIPO%29+AND+313+INPATH%28NUM%29&operador=AND&ordenacao=-%40NUM&p=false';
  if(law==='STJ'&&n===642)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=35&l=50&operador=AND&ordenacao=-%40NUM&p=false';
- if(law==='CPC')return 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm';
+ if(law==='CPC')return 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105compilada.htm';
  if(law==='CC')return 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm';
  if(law==='CDC')return 'https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm';
- if(law==='L9099')return 'https://www2.camara.leg.br/legin/fed/lei/1995/lei-9099-26-setembro-1995-348608-normaatualizada-pl.html';
+ if(law==='L9099')return 'https://www.planalto.gov.br/ccivil_03/leis/l9099.htm';
  return '';
 }
 // Detecta referências nas fichas sem confundir o número do artigo com incisos e parágrafos.

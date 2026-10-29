@@ -115,7 +115,7 @@ function renderChapter(num,label){
 }
 function renderBranch(a){return `<div class="branch-list">
   <div class="branch-heading"><strong>Spin-offs</strong><span>${a.spinoffs.length} fichas</span></div>
-  ${a.spinoffs.map((s,j)=>`<button class="spin-item ${activeSpin===j?'active':''}" aria-expanded="${activeSpin===j}" onclick="toggleSpin(${j})"><span class="spin-symbol">${activeSpin===j?'◆':'◇'}</span><span><strong>${esc(s.title)}</strong><small>${esc(s.norm)}</small>${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`).join('')}
+  ${a.spinoffs.map((s,j)=>`<button class="spin-item ${activeSpin===j?'active':''}" aria-expanded="${activeSpin===j}" onclick="toggleSpin(${j})"><span class="spin-symbol">${activeSpin===j?'◆':'◇'}</span><span><strong>${esc(s.title)}</strong>${s.inlineCitations?'':`<small>${esc(s.norm)}</small>`}${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`).join('')}
   <p class="note">Selecione um spin-off: seus pontos de verificação se abrem à direita, sem substituir o fluxo da sentença.</p>
  </div>${activeSpin!==null?renderDetail(a.spinoffs[activeSpin]):''}${activeSpin!==null?renderStatute():''}`}
 function renderInlineReferences(text){

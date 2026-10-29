@@ -31,6 +31,9 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .charges-trigger:focus-visible{outline:2px solid #246b72;outline-offset:2px}
 .charges-symbol{font-size:16px;line-height:1;color:#35736c}.charges-chevron{font-size:16px;margin-left:4px}
 .charges-explain{margin:14px 0;padding:10px 11px;border:1px solid #e7e2d6;background:#faf8f2;border-radius:8px;font-size:11px;line-height:1.55;color:#5f605c}
+.charges-literal-caption{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#527578;font-weight:750;margin:15px 0 8px}
+.charges-literal{margin:0;padding:13px 14px;border-left:3px solid #84aaa5;background:#f8faf9;color:#304551;font-size:12px;line-height:1.8;font-family:Georgia,serif;white-space:normal;overflow-wrap:anywhere;border-radius:0 8px 8px 0}
+.charges-origin-note{font-size:10px;line-height:1.55;color:#718083;margin:11px 0 0}
 .charges-exam{margin-top:17px}.charges-exam h4{font-size:13px;line-height:1.5;margin:0 0 5px;color:#2c444d}
 .charges-origin{color:#7a898a;font-size:10px;line-height:1.5}
 .charges-items{list-style:none;counter-reset:none;padding:0;margin:13px 0 0;display:grid;gap:12px}
@@ -188,17 +191,21 @@ function renderSources(){
  const point=PUBLIC_CHARGES.pontos.find(p=>p.ponto_id===activeSources);
  if(!point)return '';
  const batches=point.provas.slice().sort((a,b)=>a.banca.localeCompare(b.banca)||b.ano-a.ano);
- const content=batches.map(p=>'<section class="charges-exam"><h4>'+esc(p.banca)+' · '+esc(p.tribunal)+' · '+esc(p.ano)+'</h4>'+
- '<div class="charges-origin">'+esc(p.peca)+' · '+esc(p.localizacao)+'</div>'+
- '<ol class="charges-items">'+p.itens.map(item=>
- '<li><span class="charges-number">'+esc(item.subitem)+'</span><div><strong>'+esc(item.exigencia)+'</strong>'+
- (item.modo==='contexto_de_estudo'?'<small class="charges-kind">Exemplo de cobrança para estudo, sem lembrete mnemônico próprio</small>':'')+
- '</div></li>').join('')+'</ol></section>').join('');
+ const content=batches.map(p=>{
+   const text=typeof p.quesito_literal==='string'?p.quesito_literal:'';
+   const ids=(p.ids_analise||[]).join(', ');
+   return '<section class="charges-exam"><h4>'+esc(p.banca)+' · '+esc(p.tribunal)+' · '+esc(p.ano)+'</h4>'+
+     '<div class="charges-origin">'+esc(p.peca)+' · '+esc(p.localizacao)+'</div>'+
+     '<div class="charges-literal-caption">Quesito avaliado · transcrição literal</div>'+
+     '<blockquote class="charges-literal">'+esc(text)+'</blockquote>'+
+     '<div class="charges-origin-note">Redação da banca preservada; ajustadas apenas quebras de linha e hifenização de diagramação. Os IDs '+esc(ids)+' pertencem à nossa análise e não são subdivisões numeradas no espelho.</div>'+
+     '</section>';
+ }).join('');
  return '<aside class="statute-panel charges-panel" id="statute-panel" tabindex="-1">'+
  '<button class="detail-close" aria-label="Fechar cobranças" onclick="closeSources()">×</button>'+
  '<div class="detail-eyebrow">Consulta contextual · Espelhos de correção</div>'+
  '<h3>Cobranças em provas</h3><div class="statute-source">'+esc(point.assunto)+'</div>'+
- '<div class="charges-explain">Subexigências identificadas na análise do espelho. Os textos abaixo são <strong>sínteses fiéis, não transcrições literais</strong>. A avaliação jurídica deve ser conferida nas fichas do Palácio.</div>'+
+ '<div class="charges-explain">Veja <strong>a redação utilizada pela banca</strong>, sem substituição por sínteses ou interpretações. O texto do espelho não equivale a regra jurídica universal.</div>'+
  content+'</aside>';
 }
 function renderDetail(s){const list=(x)=>`<ul>${x.map(t=>`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;

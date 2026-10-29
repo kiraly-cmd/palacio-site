@@ -120,7 +120,7 @@ function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function fold(x){return String(x??'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function matched(a,q){if(!q.trim())return true; const text=[a.num,a.title,a.subtitle,a.source,a.intro,...a.spinoffs.flatMap(s=>[s.title,s.norm,s.alert,...(s.checks||[]),...(s.subtopics||[]).flatMap(t=>[t.title,t.norm,...t.checks])])].join(' ');return fold(text).includes(fold(q))}
 const REVIEW_KEY='palacio-civel-reviews-v1';
-const REVIEW_IDS=new Set(DATA.flatMap(a=>a.spinoffs.flatMap(s=>(s.reviewIds||[]).filter(Boolean))));
+const REVIEW_IDS=new Set(DATA.flatMap(a=>a.spinoffs.flatMap(s=>[...(s.reviewIds||[]),...(s.subtopics||[]).flatMap(t=>t.reviewIds||[])].filter(Boolean))));
 let reviewValues={};
 try{
  const stored=JSON.parse(localStorage.getItem(REVIEW_KEY)||'{}');
@@ -145,9 +145,15 @@ function renderReviewChecklist(s,i,value){
 }
 function exportReviews(){
  // Relatório autocontido para reenvio ao ChatGPT: versão 1 permanece compatível com o importador.
- const itens=DATA.flatMap(a=>a.spinoffs.flatMap((s,j)=>(s.reviewIds||[]).map((id,i)=>id&&REVIEW_IDS.has(id)?{
-  id,local:spinLabel(a,j),ficha:s.title,lembranca:s.checks?.[i]||'',validada:reviewValues[id]===true
- }:null).filter(Boolean)));
+ const itens=DATA.flatMap(a=>a.spinoffs.flatMap((s,j)=>{
+  const root=(s.reviewIds||[]).map((id,i)=>id&&REVIEW_IDS.has(id)?{
+   id,local:spinLabel(a,j),ficha:s.title,lembranca:s.checks?.[i]||'',validada:reviewValues[id]===true
+  }:null).filter(Boolean);
+  const nested=(s.subtopics||[]).flatMap((t,k)=>(t.reviewIds||[]).map((id,i)=>id&&REVIEW_IDS.has(id)?{
+   id,local:spinLabel(a,j)+'.'+(k+1),ficha:s.title+' — '+t.title,lembranca:t.checks?.[i]||'',validada:reviewValues[id]===true
+  }:null).filter(Boolean));
+  return [...root,...nested];
+ }));
  const validadas=itens.filter(x=>x.validada).map(x=>x.id);
  const data={tipo:'palacio-civel-validacoes',versao:1,exportado_em:new Date().toISOString(),validacoes:validadas,relatorio:{total:itens.length,validadas:validadas.length,pendentes:itens.length-validadas.length,lembrancas:itens}};
  const file=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
@@ -269,10 +275,10 @@ function renderSources(){
  '<div class="charges-explain">Veja <strong>a redação utilizada pela banca</strong>, sem substituição por sínteses ou interpretações. O texto do espelho não equivale a regra jurídica universal.</div>'+
  content+'</aside>';
 }
-function renderDetail(s,a,j){const list=(x,review=false)=>`<ul>${x.map((t,i)=>review?renderReviewChecklist(s,i,s.inlineCitations?renderInlineReferences(t):esc(t)):`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;
+function renderDetail(s,a,j){const list=(x,review=false,owner=s)=>`<ul>${x.map((t,i)=>review?renderReviewChecklist(owner,i,s.inlineCitations?renderInlineReferences(t):esc(t)):`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;
  return `<article class="detail-panel"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleSpin(${activeSpin})">×</button><span class="detail-eyebrow">Ficha do spin-off</span><h2><span class="detail-number">${esc(spinLabel(a,j))}</span>${esc(s.title)}</h2>${s.inlineCitations?"":`<div class="detail-norm">${esc(s.norm)}</div>${renderLawButtons(s.norm)}`}
   ${recall?`<div class="notice"><b>Modo recordar</b>Recupere mentalmente os pontos antes de clicar em “Revelar conteúdo” no cabeçalho.</div>`:
-  `${s.checks?.length?'<h3>O que verificar</h3>'+list(s.checks,true):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${list(t.checks)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
+  `${s.checks?.length?'<h3>O que verificar</h3>'+list(s.checks,true):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${list(t.checks,true,t)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
  </article>`}
 function toggleAnchor(id){if(activeAnchor===id){activeAnchor=null;activeSpin=null}else{activeAnchor=id;activeSpin=null}activeStatute=null;activeCase=null;activeSources=null;render()}
 function toggleSpin(j){activeSpin=activeSpin===j?null:j;activeStatute=null;activeCase=null;activeSources=null;render()}

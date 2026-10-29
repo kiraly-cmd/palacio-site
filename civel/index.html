@@ -276,9 +276,9 @@ function renderSources(){
  content+'</aside>';
 }
 function renderDetail(s,a,j){const list=(x,review=false,owner=s)=>`<ul>${x.map((t,i)=>review?renderReviewChecklist(owner,i,s.inlineCitations?renderInlineReferences(t):esc(t)):`<li>${s.inlineCitations?renderInlineReferences(t):esc(t)}</li>`).join('')}</ul>`;
- return `<article class="detail-panel"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleSpin(${activeSpin})">×</button><span class="detail-eyebrow">Ficha do spin-off</span><h2><span class="detail-number">${esc(spinLabel(a,j))}</span>${esc(s.title)}</h2>${s.inlineCitations?"":`<div class="detail-norm">${esc(s.norm)}</div>${renderLawButtons(s.norm)}`}
+ return `<article class="detail-panel"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleSpin(${activeSpin})">×</button><span class="detail-eyebrow">Ficha do spin-off</span><h2><span class="detail-number">${esc(spinLabel(a,j))}</span>${esc(s.title)}</h2>${s.inlineCitations?renderLawButtons(s.norm,{onlyMissing:true,checks:[...(s.checks||[]),...(s.subtopics||[]).flatMap(t=>t.checks||[])]}):`<div class="detail-norm">${esc(s.norm)}</div>${renderLawButtons(s.norm)}`}
   ${recall?`<div class="notice"><b>Modo recordar</b>Recupere mentalmente os pontos antes de clicar em “Revelar conteúdo” no cabeçalho.</div>`:
-  `${s.checks?.length?'<h3>O que verificar</h3>'+list(s.checks,true):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${list(t.checks,true,t)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
+  `${s.checks?.length?'<h3>O que verificar</h3>'+list(s.checks,true):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${renderLawButtons(t.norm,{onlyMissing:true,checks:t.checks||[]})}${list(t.checks,true,t)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
  </article>`}
 function toggleAnchor(id){if(activeAnchor===id){activeAnchor=null;activeSpin=null}else{activeAnchor=id;activeSpin=null}activeStatute=null;activeCase=null;activeSources=null;render()}
 function toggleSpin(j){activeSpin=activeSpin===j?null:j;activeStatute=null;activeCase=null;activeSources=null;render()}
@@ -296,35 +296,59 @@ const PUBLIC_CHARGES=JSON.parse(document.querySelector('#charges').textContent);
 let activeSources=null;
 let activeCase=null;
 let activeStatute=null;
-const DOC_NAMES={CPC:'Código de Processo Civil',CC:'Código Civil',CDC:'Código de Defesa do Consumidor',STJ:'Superior Tribunal de Justiça'};
+const DOC_NAMES={CPC:'Código de Processo Civil',CC:'Código Civil',CDC:'Código de Defesa do Consumidor',L9099:'Lei dos Juizados Especiais (Lei 9.099/95)',STJ:'Superior Tribunal de Justiça'};
 function officialUrl(law,n){
  if(law==='STJ'&&n===313)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=1&l=10&livre=SUMULA+INPATH%28TIPO%29+AND+313+INPATH%28NUM%29&operador=AND&ordenacao=-%40NUM&p=false';
  if(law==='STJ'&&n===642)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=35&l=50&operador=AND&ordenacao=-%40NUM&p=false';
  if(law==='CPC')return 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm';
  if(law==='CC')return 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm';
  if(law==='CDC')return 'https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm';
+ if(law==='L9099')return 'https://www2.camara.leg.br/legin/fed/lei/1995/lei-9099-26-setembro-1995-348608-normaatualizada-pl.html';
  return '';
 }
 // Detecta referências nas fichas sem confundir o número do artigo com incisos e parágrafos.
 function refsFromNorm(norm){
- const segments=String(norm||'').split(';').map(x=>x.trim()).filter(Boolean), out=[];
+ const segments=String(norm||'').split(';').map(x=>x.trim()).filter(Boolean), found=[];
  let inferred=null;
- for(let j=segments.length-1;j>=0;j--){
-   let segment=segments[j];
-   const explicit=segment.match(/\/(CPC|CC|CDC)\b/i);if(explicit)inferred=explicit[1].toUpperCase();
-   if(!inferred)continue;
-   const clean=segment.replace(/\/(CPC|CC|CDC)\b/gi,'').replace(/^\s*(?:especialmente\s+|arts?\.?\s*)+/i,'').trim();
-   const m=clean.match(/^(\d{1,2}\.\d{3}|\d{1,4})(?:\s*[-–]\s*(\d{1,2}\.\d{3}|\d{1,4}))?/);
-   if(!m)continue;
-   const start=Number(m[1].replace('.','')),end=m[2]?Number(m[2].replace('.','')):start;
-   if(end>=start && end-start<=9){for(let k=start;k<=end;k++)out.push({law:inferred,n:k,seg:j});}
-   else if(end>start)out.push({law:inferred,n:start,end,seg:j});
-   else out.push({law:inferred,n:start,seg:j});
+ for(let i=segments.length-1;i>=0;i--){
+  const segment=segments[i];
+  const special=/\b(?:Lei\s*9\.099\/95|9\.099\/95)\b/i.test(segment);
+  const explicit=segment.match(/\/(CPC|CC|CDC)\b/i);
+  const codeOnly=segment.match(/^(CPC|CC|CDC)$/i);
+  if(special)inferred='L9099';else if(explicit)inferred=explicit[1].toUpperCase();else if(codeOnly)inferred=codeOnly[1].toUpperCase();
+  if(!inferred)continue;
+  if(codeOnly){found.push({law:inferred,codeOnly:true,seg:i});continue}
+  const clean=segment.replace(/^\s*(?:especialmente\s+|arts?\.?\s*)+/i,'').trim();
+  const m=clean.match(/^(\d{1,2}\.\d{3}|\d{1,4})(?:\s*[-–]\s*(\d{1,2}\.\d{3}|\d{1,4}))?/);
+  if(!m)continue;
+  const n=Number(m[1].replace('.','')),end=m[2]?Number(m[2].replace('.','')):n;
+  if(end>=n&&end-n<=40){for(let k=n;k<=end;k++)found.push({law:inferred,n:k,seg:i})}
+  else found.push({law:inferred,n,end:end>n?end:null,seg:i});
  }
- return out.sort((a,b)=>a.seg-b.seg || a.n-b.n).filter((r,i,a)=>a.findIndex(s=>s.law===r.law && s.n===r.n && s.end===r.end)===i).slice(0,17);
+ return found.sort((a,b)=>a.seg-b.seg||(a.n||0)-(b.n||0))
+  .filter((x,i,arr)=>arr.findIndex(y=>x.law===y.law&&x.n===y.n&&x.end===y.end&&x.codeOnly===y.codeOnly)===i);
 }
-function refLabel(r){return 'art. '+r.n+(r.end?'–'+r.end:'')+'/'+r.law}
-function renderLawButtons(norm){const refs=refsFromNorm(norm);return refs.length?`<div class="law-label">Clique para ler o texto do artigo</div><div class="statute-refs">${refs.map(r=>`<button type="button" class="law-button ${activeStatute?.law===r.law&&activeStatute?.n===r.n?'active':''}" onclick="openStatute('${r.law}',${r.n},${r.end||'null'})" title="Consultar a redação legal"><span class="law-symbol">§</span>${esc(refLabel(r))}</button>`).join('')}</div>`:''}
+function refLabel(r){return r.codeOnly?DOC_NAMES[r.law]||r.law:'art. '+r.n+(r.end?'–'+r.end:'')+'/'+(r.law==='L9099'?'Lei 9.099/95':r.law)}
+function renderLawButtons(norm,options={}){
+ const refs=refsFromNorm(norm),extra=[];
+ if(/\bResolução\s+CNJ\s+n[º.]?\s*492\/2023/i.test(norm))extra.push('<a class="law-button" href="https://atos.cnj.jus.br/atos/detalhar/4986" target="_blank" rel="noopener noreferrer">Resolução CNJ nº 492/2023 ↗</a>');
+ const add=refs.map(r=>{
+  if(r.codeOnly){
+   const url=officialUrl(r.law,0);
+   return url?'<a class="law-button" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(refLabel(r))+' ↗</a>':'';
+  }
+  const check=options.checks||[];
+  // Não duplicar o mesmo artigo quando sua remissão já é diretamente clicável na afirmação.
+  if(options.onlyMissing&&check.some(t=>new RegExp('arts?\\.?\\s*'+r.n+'(?:\\s*[,/]|\\s+[^()]{0,60}\\/'+r.law+')','i').test(t)&&t.includes('/'+r.law)))return '';
+  const hasLocal=Boolean(STATUTES[r.law+':'+r.n]);
+  return '<button type="button" class="law-button '+(activeStatute?.law===r.law&&activeStatute?.n===r.n?'active':'')+
+   '" onclick="openStatute(\''+r.law+'\','+r.n+','+(r.end||'null')+')" title="'+
+   (hasLocal?'Texto integral disponível nesta ficha':'Abrir referência e acessar a redação integral na fonte oficial')+
+   '"><span class="law-symbol">§</span>'+esc(refLabel(r))+(hasLocal?'':' ↗')+'</button>';
+ }).filter(Boolean);
+ const rendered=[...add,...extra];
+ return rendered.length?'<div class="law-label">'+(options.onlyMissing?'Referências complementares':'Referências normativas (texto integral local ou fonte oficial)')+'</div><div class="statute-refs">'+rendered.join('')+'</div>':'';
+}
 function openStatute(law,n,end=null,focus=''){activeCase=null;activeSources=null;activeStatute={law,n,end,focus};render();const panel=document.querySelector('#statute-panel');if(panel){panel.focus({preventScroll:true}); panel.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});}}
 function closeStatute(){activeStatute=null;render()}
 function openCaseLaw(id){

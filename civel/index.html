@@ -119,18 +119,18 @@ function renderBranch(a){return `<div class="branch-list">
   <p class="note">Selecione um spin-off: seus pontos de verificação se abrem à direita, sem substituir o fluxo da sentença.</p>
  </div>${activeSpin!==null?renderDetail(a.spinoffs[activeSpin]):''}${activeSpin!==null?renderStatute():''}`}
 function renderInlineReferences(text){
- // Texto jurídico permanece escapado; somente referências legais/jurisprudenciais reconhecidas viram botões.
- const pattern=/(arts?\\.?\\s*\\d{1,2}\\.?\\d{0,3}(?:,\\s*[^()\\/;]{1,48})?\\/(?:CPC|CC|CDC)|Súmula\\s+\\d+\\/STJ)/gi;
+ const pattern=/(arts?\.\s*\d{1,2}\.?\d{0,3}(?:,\s*[^()\/;]{1,48})?\/(?:CPC|CC|CDC)|Súmula\s+\d+\/STJ)/gi;
  let out='',last=0,m;const raw=String(text??'');
  while((m=pattern.exec(raw))!==null){
-  const cite=m[0], law=(cite.match(/\\/(CPC|CC|CDC|STJ)$/i)||[])[1];
-  const number=(cite.match(/\\d{1,2}\\.?\\d{0,3}/)||[])[0];
+  const cite=m[0], law=(cite.match(/\/(CPC|CC|CDC|STJ)$/i)||[])[1];
+  const number=(cite.match(/\d{1,2}\.?\d{0,3}/)||[])[0];
   if(!law||!number)continue;
   const n=Number(number.replace('.','')),source=law.toUpperCase();
-  const focus=source==='CPC'&&n===313&&/I\\s+e\\s+§§\\s*1/.test(cite)?'I,§ 1º,§ 2º':'';
+  const focus=source==='CPC'&&n===313&&/I\s+e\s+§§\s*1/.test(cite)?'I,§ 1º,§ 2º':'';
   out+=esc(raw.slice(last,m.index));
   const active=activeStatute?.law===source&&activeStatute?.n===n;
-  out+='<button type="button" class="inline-ref" aria-label="Consultar '+esc(cite)+'" aria-pressed="'+active+'" onclick="openStatute(\\''+source+'\\','+n+',null,\\''+focus+'\\')">'+esc(cite)+'</button>';
+  const action="openStatute('"+source+"',"+n+",null,'"+focus+"')";
+  out+='<button type="button" class="inline-ref" aria-label="Consultar '+esc(cite)+'" aria-pressed="'+active+'" onclick="'+esc(action)+'">'+esc(cite)+'</button>';
   last=m.index+cite.length;
  }
  return out+esc(raw.slice(last));
@@ -192,12 +192,12 @@ function renderStatute(){if(!activeStatute)return '';const {law,n,end,focus=''}=
   // Exibe todo o artigo, inclusive incisos e parágrafos não citados. Identifica o ponto do clique.
   let parent='',highlighted=false;
   const wanted=new Set(String(focus).split(',').map(x=>x.trim()).filter(Boolean));
-  const lines=String(txt).split('\\n').map((line,i)=>{
-    const para=line.match(/^§\\s*(\\d+)º/);
+  const lines=String(txt).split('\n').map((line,i)=>{
+    const para=line.match(/^§\s*(\d+)º/);
     if(para)parent='§ '+para[1]+'º';
-    const topInc=/^[IVXLCDM]+\\s*-/.test(line)&&parent==='';
+    const topInc=/^[IVXLCDM]+\s*-/.test(line)&&parent==='';
     const isRelevant=wanted.size?
-      (wanted.has('I')&&topInc&&/^I\\s*-/.test(line))||
+      (wanted.has('I')&&topInc&&/^I\s*-/.test(line))||
       (wanted.has(parent)&&parent!=='') :
       (i===0);
     if(isRelevant)highlighted=true;

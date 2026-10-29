@@ -195,11 +195,12 @@ function renderBranch(a){return `<div class="branch-list">
   <p class="note">Selecione um spin-off: seus pontos de verificação se abrem à direita, sem substituir o fluxo da sentença.</p>
  </div>${activeSpin!==null?renderDetail(a.spinoffs[activeSpin]):''}${activeSpin!==null?(activeSources?renderSources():activeCase?renderCase():renderStatute()):''}`}
 function renderInlineReferences(text){
- const pattern=/(arts?\.\s*\d{1,2}\.?\d{0,3}(?:,\s*[^()\/;]{1,48})?\/(?:CPC|CC|CDC)|Súmula\s+\d+\/STJ|(?:STJ,\s*)?REsp\s+\d{1,2}\.\d{3}\.\d{3}\/[A-Z]{2})/gi;
+ const pattern=/(arts?\.\s*\d{1,2}\.?\d{0,3}(?:,\s*[^()\/;]{1,48})?\/(?:CPC|CC|CDC)|Súmula\s+\d+\/STJ|(?:STJ,\s*)?REsp\s+\d{1,2}\.\d{3}\.\d{3}\/[A-Z]{2}|Resolução\s+CNJ\s+n[º.]?\s*492\/2023)/gi;
  let out='',last=0,m;const raw=String(text??'');
  while((m=pattern.exec(raw))!==null){
   const cite=m[0],isJudgment=/REsp/i.test(cite);
   let action='',active=false;
+  if(/^Resolução\s+CNJ/i.test(cite)){out+=esc(raw.slice(last,m.index))+'<a class="inline-ref" href="https://atos.cnj.jus.br/atos/detalhar/4986" target="_blank" rel="noopener noreferrer" title="Consultar ato oficial no CNJ">'+esc(cite)+'</a>';last=m.index+cite.length;continue;}
   if(isJudgment){
    const decision=cite.match(/REsp\s+(\d{1,2}\.\d{3}\.\d{3})\/([A-Z]{2})/i);
    if(!decision)continue;
@@ -285,6 +286,7 @@ let activeCase=null;
 let activeStatute=null;
 const DOC_NAMES={CPC:'Código de Processo Civil',CC:'Código Civil',CDC:'Código de Defesa do Consumidor',STJ:'Superior Tribunal de Justiça'};
 function officialUrl(law,n){
+ if(law==='STJ'&&n===313)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=1&l=10&livre=SUMULA+INPATH%28TIPO%29+AND+313+INPATH%28NUM%29&operador=AND&ordenacao=-%40NUM&p=false';
  if(law==='STJ'&&n===642)return 'https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&i=35&l=50&operador=AND&ordenacao=-%40NUM&p=false';
  if(law==='CPC')return 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm';
  if(law==='CC')return 'https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm';

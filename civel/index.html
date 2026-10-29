@@ -231,8 +231,8 @@ function renderInlineReferences(text){
  while((m=pattern.exec(raw))!==null){
   const cite=m[0],isJudgment=/REsp/i.test(cite);
   let action='',active=false;
+  if(/^art\.\s*699-A\/CPC/i.test(cite)){out+=esc(raw.slice(last,m.index))+'<button type="button" class="inline-ref" onclick="openStatute(\'CPC\',\'699-A\')">'+esc(cite)+'</button>';last=m.index+cite.length;continue;}
   const direct=
-    /^art\.\s*699-A\/CPC/i.test(cite)?'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105compilada.htm':
     /^art\.\s*7[º°]?\/Lei/i.test(cite)?'https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm':
     /^Lei\s*14\.713/i.test(cite)?'https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14713.htm':
     /Tema\s+622/i.test(cite)?'https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=622':'';
@@ -359,7 +359,7 @@ function renderLawButtons(norm,options={}){
  const refs=refsFromNorm(norm),extra=[];
  if(/\b(?:STF,\s*)?Tema\s*622/i.test(norm))extra.push('<a class="law-button" href="https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=622" target="_blank" rel="noopener noreferrer">STF — Tema 622 ↗</a>');
  if(/Lei\s*14\.713\/2023/i.test(norm))extra.push('<a class="law-button" href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14713.htm" target="_blank" rel="noopener noreferrer">Lei 14.713/2023 ↗</a>');
- if(/699-A\/CPC/i.test(norm))extra.push('<a class="law-button" href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105compilada.htm" target="_blank" rel="noopener noreferrer">art. 699-A/CPC ↗</a>');
+ if(/699-A\/CPC/i.test(norm))extra.push('<button class="law-button" onclick="openStatute(\'CPC\',\'699-A\')">art. 699-A/CPC</button>');
  if(/\bResolução\s+CNJ\s+n[º.]?\s*492\/2023/i.test(norm))extra.push('<a class="law-button" href="https://atos.cnj.jus.br/atos/detalhar/4986" target="_blank" rel="noopener noreferrer">Resolução CNJ nº 492/2023 ↗</a>');
  const add=refs.map(r=>{
   if(r.codeOnly){

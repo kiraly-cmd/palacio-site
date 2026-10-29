@@ -140,8 +140,8 @@ function renderReviewChecklist(s,i,value){
  const rid=s.reviewIds?.[i];
  if(!rid||!REVIEW_IDS.has(rid))return '<li>'+value+'</li>';
  const done=reviewValues[rid]===true;
- return '<li><label class="reminder-reviewed '+(done?'is-validated':'')+'"><input type="checkbox" '+(done?'checked ':'')+
-  'aria-label="Lembrança validada por mim" data-review-id="'+esc(rid)+'" onchange="toggleReview(this.dataset.reviewId,this.checked)"><span>'+value+'</span></label></li>';
+ return '<li><div class="reminder-reviewed '+(done?'is-validated':'')+'"><input type="checkbox" '+(done?'checked ':'')+
+  'aria-label="Lembrança validada por mim" data-review-id="'+esc(rid)+'" onchange="toggleReview(this.dataset.reviewId,this.checked)"><span>'+value+'</span></div></li>';
 }
 function exportReviews(){
  // Relatório autocontido para reenvio ao ChatGPT: versão 1 permanece compatível com o importador.

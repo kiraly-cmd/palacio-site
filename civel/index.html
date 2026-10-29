@@ -266,7 +266,7 @@ function renderInlineReferences(text){
    if(!law||!number)continue;
    const n=Number(number.replace('.','')),source=law.toUpperCase();
    const artRange=cite.match(/^arts?\.\s*\d{1,2}\.?\d{0,3}\s*[-–]\s*(\d{1,2}\.?\d{0,3})/i);
-   const end=artRange?Number(artRange[1].replace('.',')):null;
+   const end=artRange?Number(artRange[1].replace('.','')):null;
    const range=cite.match(/§§\s*(\d+)º\s*[-–]\s*(\d+)º/);
    const one=cite.match(/§\s*(\d+)º/);
    const roman=cite.match(/,\s*([IVXLCDM]+)(?:\s+e\s+|\/)/);

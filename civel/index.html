@@ -133,6 +133,12 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .chapter-title{font:normal 21px/1.23 Georgia,"Times New Roman",serif;letter-spacing:-.01em;}
 .chapter-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}
 .chapter-concept{display:block;width:100%;box-sizing:border-box;font-size:11.5px;line-height:1.5;color:#d7e6e6;margin-top:0;padding-top:9px;border-top:1px solid #547481}
+button.chapter-box{appearance:none;width:100%;font:inherit;text-align:left;cursor:pointer;transition:background .16s,border-color .16s,box-shadow .16s}
+button.chapter-box:hover{background:#234553;border-color:#62818b;box-shadow:0 8px 23px rgba(19,43,55,.19)}
+button.chapter-box:focus-visible{outline:3px solid #8fbfba;outline-offset:3px}
+button.chapter-box.is-expanded{box-shadow:0 0 0 3px #b9d8d3,0 7px 20px rgba(19,43,55,.16)}
+.chapter-toggle{margin-left:auto;padding-left:10px;font:300 24px/1 system-ui,sans-serif;color:#dce9e8}
+.flow-row.chapter-collapsed{display:none}
 .anchor-subitem .anchor-box{padding-left:21px;}
 /* Relatório, Fundamentação e Dispositivo: mesmo nível visual de parte da sentença. */
 .anchor-first .anchor-box,.anchor-first .anchor-box.active{background:var(--navy);color:#f8fbfa;border-color:#294657;box-shadow:0 7px 20px rgba(19,43,55,.12)}
@@ -147,7 +153,7 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 <nav class="portal-return" aria-label="Navegação entre palácios"><a href="../">← Voltar aos Palácios</a></nav>
 <header class="hero"><div class="brand"><div class="emblem">§</div><div><div class="kicker">Magistratura · Palácio da Memória</div><h1>Fluxo integral da sentença cível</h1><p>Uma sequência · Âncoras verticalizadas · Expansões laterais</p></div></div>
 <div class="controls"><input id="search" type="search" placeholder="Buscar artigo ou assunto" aria-label="Buscar no fluxo" oninput="search(this.value)"><button class="action" id="recall" onclick="toggleRecall()">Modo recordar</button><button class="action" id="closeall" onclick="closeAll()">Recolher</button><button class="action" onclick="setZoom(-.1)" aria-label="Diminuir zoom">−</button><span class="chip" id="zoomlabel">100%</span><button class="action" onclick="setZoom(.1)" aria-label="Aumentar zoom">+</button><button class="action dark" onclick="fitZoom()">Ajustar visão</button></div></header>
-<div class="intro"><p><strong>Como percorrer:</strong> siga as caixas de cima para baixo, como na redação integral da sentença. Clique em uma âncora para abrir seus spin-offs <strong>ao lado</strong>; clique no spin-off para abrir seus fundamentos ainda mais à direita. Nas fichas, clique em um <strong>número de artigo</strong> para abrir seu texto legal em uma quarta caixa lateral. O eixo principal permanece sempre visível, sem trocar de página.</p><div class="stats" id="stats">12 âncoras</div><div class="review-bar" aria-label="Controle de validação de lembranças"><span id="review-summary">Carregando validações…</span><button type="button" onclick="exportReviews()" title="Baixar relatório JSON das lembranças validadas e pendentes para enviar ao ChatGPT">Exportar relatório</button><label class="review-import">Importar<input id="review-file" type="file" accept=".json,application/json" onchange="importReviews(this.files?.[0]);this.value=''" aria-label="Importar backup de validações"></label></div></div>
+<div class="intro"><p><strong>Como percorrer:</strong> clique em <strong>Relatório, Fundamentação ou Dispositivo</strong> para expandir ou recolher cada parte. Em Fundamentação aparecem as âncoras 2.1 a 2.8; em Dispositivo, 3.1 a 3.3. Clique em uma âncora para abrir seus spin-offs <strong>ao lado</strong>; clique no spin-off para abrir seus fundamentos ainda mais à direita. Nas fichas, clique em um <strong>número de artigo</strong> para abrir seu texto legal em uma quarta caixa lateral. O eixo principal permanece sempre visível, sem trocar de página.</p><div class="stats" id="stats">12 âncoras</div><div class="review-bar" aria-label="Controle de validação de lembranças"><span id="review-summary">Carregando validações…</span><button type="button" onclick="exportReviews()" title="Baixar relatório JSON das lembranças validadas e pendentes para enviar ao ChatGPT">Exportar relatório</button><label class="review-import">Importar<input id="review-file" type="file" accept=".json,application/json" onchange="importReviews(this.files?.[0]);this.value=''" aria-label="Importar backup de validações"></label></div></div>
 <main class="viewport" id="viewport" aria-label="Fluxograma completo da sentença"><div id="flow" class="flow" aria-label="Âncoras em sequência vertical"></div></main>
 <div id="floating-hscroll" class="floating-hscroll" role="group" aria-label="Rolagem horizontal do Palácio" hidden><button type="button" onclick="shiftFlow(-1)" aria-label="Deslocar o fluxograma para a esquerda">‹</button><div id="floating-hscroll-track" class="floating-hscroll-track" tabindex="0" aria-label="Arraste a barra horizontal para percorrer as colunas"><div id="floating-hscroll-content" class="floating-hscroll-content"></div></div><button type="button" onclick="shiftFlow(1)" aria-label="Deslocar o fluxograma para a direita">›</button></div>
 <footer class="footer">Protótipo estrutural v3 · O conteúdo jurídico será refinado mediante os espelhos, a legislação e a jurisprudência · Uma ativação mnemônica por assunto</footer>
@@ -157,6 +163,7 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 const DATA = JSON.parse(document.querySelector('#data').textContent);
 const flow = document.querySelector('#flow');
 let activeAnchor = null, activeSpin = null, activeTopic = null, query='', scale = 1, recall = false;
+const expandedChapters={'2':false,'3':false};
 function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function fold(x){return String(x??'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function matched(a,q){if(!q.trim())return true; const text=[a.num,a.title,a.subtitle,a.concept,a.source,a.intro,...a.spinoffs.flatMap(s=>[s.title,s.norm,s.alert,...(s.checks||[]),...(s.subtopics||[]).flatMap(t=>[t.title,t.norm,...t.checks])])].join(' ');return fold(text).includes(fold(q))}
@@ -225,18 +232,20 @@ function render(){
  flow.style.setProperty('--scale',scale); flow.classList.toggle('law-open',Boolean(activeStatute||activeCase||activeSources||activeTopic!==null));
  flow.innerHTML=DATA.map((a,i)=>{
  const isOpen=activeAnchor===a.id, fit=matched(a,query);
+ const part=a.num.startsWith('2.')?'2':a.num.startsWith('3.')?'3':null;
+ const hiddenByChapter=Boolean(part&&!expandedChapters[part]);
  const chapter=(a.num.startsWith('2.') && (i===0 || !DATA[i-1].num.startsWith('2.')))
   ? renderChapter('2','Fundamentação')
   : (a.num.startsWith('3.') && (i===0 || !DATA[i-1].num.startsWith('3.')))
   ? renderChapter('3','Dispositivo') : '';
- return chapter+`<div class="flow-row ${a.id==='relatorio'?'anchor-first':'anchor-subitem'} ${query?(fit?'highlight':'faded'):''}" id="row-${esc(a.id)}">
+ return chapter+`<div class="flow-row ${a.id==='relatorio'?'anchor-first':'anchor-subitem'} ${hiddenByChapter?'chapter-collapsed':''} ${query?(fit?'highlight':'faded'):''}" id="row-${esc(a.id)}">
     <button class="anchor-box ${isOpen?'active':''}" aria-expanded="${isOpen}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
       <span class="anchor-head"><span class="anchor-no">${esc(a.num)}</span><span class="anchor-info"><span class="anchor-name">${esc(a.title)}</span><span class="anchor-caption">${esc(a.subtitle)}</span></span><span class="anchor-toggle" aria-hidden="true">${isOpen?'−':'+'}</span></span>
       <span class="anchor-concept">${esc(a.concept)}</span></button>
     <div class="branch-area ${isOpen?'':'empty'}" id="branch-${esc(a.id)}">${isOpen?renderBranch(a):''}</div>
    </div>`
  }).join('');
- document.querySelector('#closeall').disabled=!activeAnchor;
+ document.querySelector('#closeall').disabled=!(activeAnchor||expandedChapters['2']||expandedChapters['3']);
  document.querySelector('#zoomlabel').textContent=Math.round(scale*100)+'%';
  document.querySelector('#recall').textContent=recall?'Revelar conteúdo':'Modo recordar';
  requestAnimationFrame(refreshFloatingScroll);
@@ -246,10 +255,13 @@ function renderChapter(num,label){
   '2':'Explica por que o juiz decide de determinada maneira, examinando questões processuais, fatos provados, argumentos relevantes e as normas aplicáveis.',
   '3':'É a parte conclusiva da sentença, na qual o juiz anuncia as decisões sobre os pedidos e estabelece os comandos que deverão ser cumpridos.'
  };
+ const opened=expandedChapters[num];
+ const controlled=DATA.filter(a=>a.num.startsWith(num+'.')).map(a=>'row-'+a.id).join(' ');
  return `<div class="flow-row flow-chapter" role="group" aria-label="${esc(num+' — '+label)}">
-   <div class="chapter-box"><div class="chapter-head"><span class="chapter-number">${esc(num)}</span>
-   <span class="chapter-title">${esc(label)}</span></div>
-   <span class="chapter-concept">${esc(concepts[num]||'')}</span></div></div>`;
+   <button type="button" class="chapter-box ${opened?'is-expanded':''}" aria-expanded="${opened}" aria-controls="${esc(controlled)}" onclick="toggleChapter('${num}')">
+   <span class="chapter-head"><span class="chapter-number">${esc(num)}</span>
+   <span class="chapter-title">${esc(label)}</span><span class="chapter-toggle" aria-hidden="true">${opened?'−':'+'}</span></span>
+   <span class="chapter-concept">${esc(concepts[num]||'')}</span></button></div>`;
 }
 function spinLabel(a,j){return a.num+'.'+(j+1)}
 function renderBranch(a){return `<div class="branch-list">
@@ -370,14 +382,34 @@ function renderDetail(s,a,j){if(s.navigation==='subtopics')return renderTopicNav
   ${recall?`<div class="notice"><b>Modo recordar</b>Recupere mentalmente os pontos antes de clicar em “Revelar conteúdo” no cabeçalho.</div>`:
   `${s.checks?.length?(s.checkGroups?.length?(s.introCheckIndexes?.length?'<div class="check-intro">'+list(s.introCheckIndexes.map(i=>s.checks[i]),true,s,s.introCheckIndexes)+'</div>':'')+s.checkGroups.map(g=>`<section class="check-group"><h3>${esc(g.title)}</h3>${list(g.checkIndexes.map(i=>s.checks[i]),true,s,g.checkIndexes)}</section>`).join(''):'<h3>O que verificar</h3>'+list(s.checks,true)):''}${s.subtopics?.length?s.subtopics.map(t=>`<div class="subdetail"><strong>${esc(t.title)}</strong><small>${esc(t.norm)}</small>${renderLawButtons(t.norm,{onlyMissing:true,checks:t.checks||[]})}${list(t.checks,true,t)}</div>`).join(''):''}${s.alert?`<div class="notice"><b>ALERTA</b>${esc(s.alert)}</div>`:''}`}${renderSourcesTrigger(s)}
  </article>`}
+function toggleChapter(num){
+ if(!(num in expandedChapters))return;
+ expandedChapters[num]=!expandedChapters[num];
+ if(!expandedChapters[num]&&activeAnchor&&DATA.some(a=>a.id===activeAnchor&&a.num.startsWith(num+'.'))){
+  activeAnchor=null;activeSpin=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;
+ }
+ render();
+}
 function toggleAnchor(id){if(activeAnchor===id){activeAnchor=null;activeSpin=null}else{activeAnchor=id;activeSpin=null}activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render()}
 function toggleSpin(j){activeSpin=activeSpin===j?null:j;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render()}
-function closeAll(){activeAnchor=null;activeSpin=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render()}
+function closeAll(){activeAnchor=null;activeSpin=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;expandedChapters['2']=false;expandedChapters['3']=false;render()}
 function setZoom(delta){scale=Math.max(.65,Math.min(1.3,Math.round((scale+delta)*100)/100));render()}
 function fitZoom(){const viewport=document.querySelector('#viewport');const available=viewport.clientWidth-20;scale=Math.max(.65,Math.min(1,Math.floor((available/1120)*20)/20));render()}
-function search(text){query=text;render();if(text.trim()){const first=DATA.find(a=>matched(a,text));if(first){document.querySelector('#row-'+first.id).scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'})}}}
+function search(text){
+ query=text;
+ if(text.trim()){
+  for(const num of ['2','3']){
+   if(DATA.some(a=>a.num.startsWith(num+'.')&&matched(a,text)))expandedChapters[num]=true;
+  }
+ }
+ render();
+ if(text.trim()){
+  const first=DATA.find(a=>matched(a,text));
+  if(first)document.querySelector('#row-'+first.id)?.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+ }
+}
 function toggleRecall(){recall=!recall;render()}
-function keyboard(e){if(e.key==='Escape'&&activeSources!==null){closeSources()}else if(e.key==='Escape'&&activeCase!==null){closeCaseLaw()}else if(e.key==='Escape'&&activeStatute!==null){closeStatute()}else if(e.key==='Escape'&&activeTopic!==null){activeTopic=null;render()}else if(e.key==='Escape'&&activeSpin!==null){activeSpin=null;render()}else if(e.key==='Escape'&&activeAnchor){closeAll()}}
+function keyboard(e){if(e.key==='Escape'&&activeSources!==null){closeSources()}else if(e.key==='Escape'&&activeCase!==null){closeCaseLaw()}else if(e.key==='Escape'&&activeStatute!==null){closeStatute()}else if(e.key==='Escape'&&activeTopic!==null){activeTopic=null;render()}else if(e.key==='Escape'&&activeSpin!==null){activeSpin=null;render()}else if(e.key==='Escape'&&(activeAnchor||expandedChapters['2']||expandedChapters['3'])){closeAll()}}
 
 // Textos locais registrados no acervo; conferir a redação vigente no Planalto (fonte primária).
 const STATUTES=JSON.parse(document.querySelector('#statutes').textContent);

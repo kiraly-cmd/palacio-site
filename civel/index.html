@@ -626,25 +626,13 @@ function toggleChapter(num){
  }
  render();
 }
-// Ajusta a rolagem para preservar a posição do controle que abriu um grupo.
-function preserveClickedPosition(selector,update){
- const top=document.querySelector(selector)?.getBoundingClientRect().top;
- update();
- if(top===undefined)return;
- requestAnimationFrame(()=>{
-  const node=document.querySelector(selector);
-  if(node)window.scrollBy(0,node.getBoundingClientRect().top-top);
- });
-}
+// Agrupamentos usam o mesmo ciclo de abertura das demais âncoras.
 function toggleSpinGroup(id){
  const a=visibleAnchors().find(x=>x.id===activeAnchor);
  if(!a?.groupSections?.some(g=>(g.kind==='group'||g.kind==='subtopics')&&g.id===id))return;
- const update=()=>{
-  activeSpinGroup=activeSpinGroup===id?null:id;
-  activeSpin=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render();
- };
- if(a.id==='configuracao'||a.id==='pendentes')preserveClickedPosition('#spin-group-'+id+'-toggle',update);
- else update();
+ activeSpinGroup=activeSpinGroup===id?null:id;
+ activeSpin=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;
+ render();
 }
 function toggleInlineTopic(j,k){
  const a=visibleAnchors().find(x=>x.id===activeAnchor),s=a?.spinoffs?.[j];
@@ -654,18 +642,15 @@ function toggleInlineTopic(j,k){
  activeStatute=null;activeCase=null;activeSources=null;render();
 }
 function toggleAnchor(id){
- const update=()=>{
-  if(activeAnchor===id){activeAnchor=null;activeSpin=null}else{activeAnchor=id;activeSpin=null}
-  activeSpinGroup=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render();
- };
- if(id==='configuracao'||id==='pendentes')preserveClickedPosition('#row-'+id+' .anchor-box',update);
- else update();
+ if(activeAnchor===id){activeAnchor=null;activeSpin=null}
+ else{activeAnchor=id;activeSpin=null}
+ activeSpinGroup=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;
+ render();
 }
 function toggleSpin(j){
- const a=visibleAnchors().find(x=>x.id===activeAnchor);
- const update=()=>{activeSpin=activeSpin===j?null:j;activeSpinGroup=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;render()};
- if(a&&(a.id==='configuracao'||a.id==='pendentes'))preserveClickedPosition('#row-'+a.id+' .anchor-box',update);
- else update();
+ activeSpin=activeSpin===j?null:j;
+ activeSpinGroup=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;
+ render();
 }
 function closeAll(){activeAnchor=null;activeSpin=null;activeSpinGroup=null;activeTopic=null;activeStatute=null;activeCase=null;activeSources=null;expandedChapters['2']=false;expandedChapters['3']=false;render()}
 function setZoom(delta){scale=Math.max(.65,Math.min(1.3,Math.round((scale+delta)*100)/100));render()}

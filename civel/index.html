@@ -134,8 +134,15 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .chapter-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}
 .chapter-concept{display:block;width:100%;box-sizing:border-box;font-size:11.5px;line-height:1.5;color:#d7e6e6;margin-top:0;padding-top:9px;border-top:1px solid #547481}
 .anchor-subitem .anchor-box{padding-left:21px;}
-.anchor-first .anchor-box{border-color:#95b2b5;background:#f9fcfa;}
-.anchor-first .anchor-no{font-size:15px;background:#daeae7;color:#205c62;border-color:#9dc7bf;}
+/* Relatório, Fundamentação e Dispositivo: mesmo nível visual de parte da sentença. */
+.anchor-first .anchor-box,.anchor-first .anchor-box.active{background:var(--navy);color:#f8fbfa;border-color:#294657;box-shadow:0 7px 20px rgba(19,43,55,.12)}
+.anchor-first .anchor-box:hover{background:#234553;border-color:#62818b;box-shadow:0 8px 23px rgba(19,43,55,.19)}
+.anchor-first .anchor-box.active{box-shadow:0 0 0 3px #b9d8d3,0 7px 20px rgba(19,43,55,.16)}
+.anchor-first .anchor-no,.anchor-first .anchor-box.active .anchor-no{font-size:16px;font-weight:800;background:#345866;color:#fdfefe;border-color:#53717d}
+.anchor-first .anchor-name{font-size:21px;line-height:1.23;letter-spacing:-.01em}
+.anchor-first .anchor-caption{color:#c5d7d9}
+.anchor-first .anchor-toggle{color:#dce9e8}
+.anchor-first .anchor-concept{color:#d7e6e6;border-top-color:#547481}
 </style><!-- Teste de sincronização GitHub privada → pública: 2026-10-28; nenhum conteúdo jurídico alterado. --></head><body>
 <nav class="portal-return" aria-label="Navegação entre palácios"><a href="../">← Voltar aos Palácios</a></nav>
 <header class="hero"><div class="brand"><div class="emblem">§</div><div><div class="kicker">Magistratura · Palácio da Memória</div><h1>Fluxo integral da sentença cível</h1><p>Uma sequência · Âncoras verticalizadas · Expansões laterais</p></div></div>

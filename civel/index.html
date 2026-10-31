@@ -282,6 +282,11 @@ async function importReviews(file){
  }catch(e){alert('Não foi possível importar o backup: '+(e?.message||'erro de leitura'))}
 }
 function render(){
+ // Todos os cliques reconstroem o fluxograma; conservar a referência visual e
+ // o foco do controle acionado evita saltos nos agrupamentos altos (2.1/2.2).
+ const priorControl=document.activeElement?.closest?.('[data-position-key]');
+ const priorKey=priorControl?.getAttribute('data-position-key');
+ const priorTop=priorControl?.getBoundingClientRect().top;
  const topics=viewMode==='topics',collection=visibleAnchors();
  const count=collection.reduce((n,a)=>n+a.spinoffs.length,0);
  document.querySelector('#stats').textContent=topics?`${THEMES.length} categorias · ${count} fichas temáticas`:`${DATA.length} âncoras · ${count} desdobramentos · estrutura geral`;
@@ -306,12 +311,25 @@ function render(){
   : (a.num.startsWith('3.') && (i===0 || !DATA[i-1].num.startsWith('3.')))
   ? renderChapter('3','Dispositivo') : '';
  return chapter+`<div class="flow-row ${a.id==='relatorio'?'anchor-first':'anchor-subitem'} ${hiddenByChapter?'chapter-collapsed':''} ${query?(fit?'highlight':'faded'):''}" id="row-${esc(a.id)}">
-    <button class="anchor-box ${isOpen?'active':''}" aria-expanded="${isOpen}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
+    <button class="anchor-box ${isOpen?'active':''}" data-position-key="anchor-${esc(a.id)}" aria-expanded="${isOpen}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
       <span class="anchor-head"><span class="anchor-no">${esc(a.num)}</span><span class="anchor-info"><span class="anchor-name">${esc(a.title)}</span><span class="anchor-caption">${esc(a.subtitle)}</span></span><span class="anchor-toggle" aria-hidden="true">${isOpen?'−':'+'}</span></span>
       <span class="anchor-concept">${esc(a.concept)}</span></button>
     <div class="branch-area ${isOpen?'':'empty'}" id="branch-${esc(a.id)}">${isOpen?renderBranch(a):''}</div>
    </div>`
  }).join(''));
+ if(priorKey&&Number.isFinite(priorTop)){
+  const nextControl=[...flow.querySelectorAll('[data-position-key]')].find(el=>el.getAttribute('data-position-key')===priorKey);
+  if(nextControl){
+   const delta=nextControl.getBoundingClientRect().top-priorTop;
+   if(Math.abs(delta)>0.5){
+    const doc=document.documentElement, oldBehavior=doc.style.scrollBehavior;
+    doc.style.scrollBehavior='auto';
+    window.scrollTo(window.scrollX,window.scrollY+delta);
+    doc.style.scrollBehavior=oldBehavior;
+   }
+   nextControl.focus({preventScroll:true});
+  }
+ }
  document.querySelector('#closeall').disabled=!(activeAnchor||(!topics&&(expandedChapters['2']||expandedChapters['3'])));
  document.querySelector('#zoomlabel').textContent=Math.round(scale*100)+'%';
  document.querySelector('#recall').textContent=recall?'Revelar conteúdo':'Modo recordar';
@@ -371,7 +389,7 @@ function renderSpecificTopics(){
  return THEMES.map(a=>{
  const opened=activeAnchor===a.id,fit=matched(a,query);
  return `<div class="flow-row topic-row ${query?(fit?'highlight':'faded'):''}" id="row-${esc(a.id)}">
- <button class="anchor-box ${opened?'active':''}" aria-expanded="${opened}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
+ <button class="anchor-box ${opened?'active':''}" data-position-key="anchor-${esc(a.id)}" aria-expanded="${opened}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
  <span class="anchor-head"><span class="anchor-no">${esc(a.num)}</span><span class="anchor-info"><span class="anchor-name">${esc(a.title)}</span><span class="anchor-caption">${esc(a.subtitle)}</span></span><span class="anchor-toggle" aria-hidden="true">${opened?'−':'+'}</span></span>
  <span class="anchor-concept">${esc(a.concept)}</span></button>
  <div class="branch-area ${opened?'':'empty'}" id="branch-${esc(a.id)}">${opened?renderBranch(a):''}</div></div>`;
@@ -423,7 +441,7 @@ function spinLabel(a,j){
 }
 function renderSpinChoice(a,s,j){
  const on=activeSpin===j;
- return `<button class="spin-item ${on?'active':''}" aria-expanded="${on}" onclick="toggleSpin(${j})"><span class="spin-symbol">${on?'◆':'◇'}</span><span><span class="spin-number">${esc(spinLabel(a,j))}</span><strong>${esc(s.title)}</strong>${s.inlineCitations?'':`<small>${esc(s.norm)}</small>`}${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`;
+ return `<button class="spin-item ${on?'active':''}" data-position-key="spin-${esc(s.id)}" aria-expanded="${on}" onclick="toggleSpin(${j})"><span class="spin-symbol">${on?'◆':'◇'}</span><span><span class="spin-number">${esc(spinLabel(a,j))}</span><strong>${esc(s.title)}</strong>${s.inlineCitations?'':`<small>${esc(s.norm)}</small>`}${s.tag?`<em>${esc(s.tag)}</em>`:''}</span></button>`;
 }
 function renderGroupSections(a){
  const positions=new Map(a.spinoffs.map((s,i)=>[s.id,i]));
@@ -441,7 +459,7 @@ function renderGroupSections(a){
     return `<button type="button" class="spin-item ${selected?'active':''}" data-subtopic-index="${k}" aria-expanded="${selected}" onclick="toggleInlineTopic(${j},${k})"><span class="spin-symbol">${selected?'◆':'◇'}</span><span><span class="spin-number">${esc(spinLabel(a,j)+'.'+(k+1))}</span><strong>${esc(t.title)}</strong></span></button>`;
    }).join(''):'';
   }
-  return `<section class="spin-group"><button type="button" class="spin-group-toggle ${on?'is-expanded':''}" aria-expanded="${on}" id="spin-group-${esc(g.id)}-toggle" aria-controls="spin-group-${esc(g.id)}" onclick="toggleSpinGroup('${esc(g.id)}')"><span class="spin-number">${esc(a.num+'.'+(i+1))}</span><span class="spin-group-label"><strong>${esc(g.title)}</strong><small>${esc(g.description||'')}</small></span><span class="spin-group-arrow" aria-hidden="true">${on?'−':'+'}</span></button><div class="spin-group-items" id="spin-group-${esc(g.id)}" ${on?'':'hidden'}>${children}</div></section>`;
+  return `<section class="spin-group"><button type="button" class="spin-group-toggle ${on?'is-expanded':''}" data-position-key="group-${esc(g.id)}" aria-expanded="${on}" id="spin-group-${esc(g.id)}-toggle" aria-controls="spin-group-${esc(g.id)}" onclick="toggleSpinGroup('${esc(g.id)}')"><span class="spin-number">${esc(a.num+'.'+(i+1))}</span><span class="spin-group-label"><strong>${esc(g.title)}</strong><small>${esc(g.description||'')}</small></span><span class="spin-group-arrow" aria-hidden="true">${on?'−':'+'}</span></button><div class="spin-group-items" id="spin-group-${esc(g.id)}" ${on?'':'hidden'}>${children}</div></section>`;
  }).join('');
 }
 function renderInlineSubtopicDetail(s,a,j){

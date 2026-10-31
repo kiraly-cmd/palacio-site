@@ -132,7 +132,7 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .family-topic-panel{width:var(--c4);flex-shrink:0}.family-topic-panel h3.topic-title{font:normal 20px/1.25 Georgia,serif;color:var(--ink);letter-spacing:0;text-transform:none;margin:13px 32px 14px 0}.family-topic-panel ul{padding-left:18px;display:grid;gap:10px}.family-topic-panel li{font-size:12px;line-height:1.55}.family-topic-panel .check-group{margin:14px 0}
 .note{color:#6c7a7d;font-size:10px;line-height:1.6;margin:12px 4px 0}.empty-result{background:white;border:1px dashed #bccbcc;padding:15px;border-radius:10px;font-size:12px;color:#66777c}.faded .anchor-box{opacity:.4}.faded .anchor-box:hover{opacity:1}.highlight .anchor-box{border-color:#cea970;box-shadow:0 0 0 2px #f2e2c7}
 .footer{border-top:1px solid #dce3e3;background:#fdfdfb;padding:17px 30px;text-align:center;color:#8a9698;font-size:11px}
-@keyframes enter{from{opacity:.3;transform:translateX(-9px)}to{opacity:1;transform:translateX(0)}}
+@keyframes enter{from{opacity:.3}to{opacity:1}}
 @media(max-width:850px){.hero{padding:13px 18px}.brand h1{font-size:23px}.intro{padding:14px 18px}.viewport{padding-left:18px;padding-right:18px}.controls input{min-width:120px;max-width:155px}.hero .controls{width:100%}.flow{--c1:305px;--c2:276px;--c3:365px;--gap:24px}.flow-row{margin-bottom:22px}.anchor-name{font-size:17px}.detail-panel h2{font-size:20px}.branch-area:before,.detail-panel:before{width:var(--gap)} }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
@@ -297,9 +297,9 @@ function alignBranchPanels(){
   last.style.marginTop=Math.max(0,Math.round(desiredY-connectorHeight))+'px';
  }
  let links='';
- const line=(from,to)=>{
+ const line=(from,to,sourceBorder=null)=>{
   const start=localRect(from),end=localRect(to);
-  const x1=Math.round(start.right),y1=Math.round(start.midY),x2=Math.round(end.left),y2=Math.round(end.top+connectorHeight);
+  const x1=Math.round(sourceBorder?localRect(sourceBorder).right:start.right),y1=Math.round(start.midY),x2=Math.round(end.left),y2=Math.round(end.top+connectorHeight);
   if(x2<=x1)return '';
   const mid=Math.round((x1+x2)/2);
   const d=Math.abs(y1-y2)<=2?`M ${x1} ${y1} L ${x2} ${y2}`:`M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`;
@@ -308,7 +308,7 @@ function alignBranchPanels(){
  if(detail&&selected)links+=line(selected,detail);
  if(last&&detail){
   const trigger=detail.querySelector('.inline-ref[aria-pressed="true"],.law-button.active,.charges-trigger[aria-expanded="true"],.topic-nav-item.active')||detail;
-  links+=line(trigger,last);
+  links+=line(trigger,last,detail);
  }
  area.classList.toggle('linked',Boolean(links));
  const width=Math.max(area.clientWidth||0,Math.ceil(bounds.width*ratio),1);

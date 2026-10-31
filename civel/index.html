@@ -86,12 +86,12 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 
 .flow:before{position:absolute;content:'';left:calc(var(--c1)/2 + 5px);top:12px;bottom:60px;width:3px;background:linear-gradient(#bac6ca,#9fafb8 50%,#bac6ca);border-radius:3px;z-index:0;pointer-events:none}
 .flow-row{position:relative;display:grid;grid-template-columns:var(--c1) calc(var(--c2) + var(--gap) + var(--c3));column-gap:var(--gap);align-items:start;min-height:83px;margin-bottom:28px;isolation:isolate}
-.anchor-box{background:#fff;border:1px solid #d9e0e1;min-height:81px;border-radius:14px;box-shadow:0 4px 12px #152f3d08;padding:14px 18px;display:flex;align-items:center;gap:13px;width:100%;text-align:left;color:var(--ink);position:relative;z-index:1;transition:background .15s,border-color .15s,box-shadow .15s}
+.anchor-box{background:#fff;border:1px solid #d9e0e1;min-height:81px;border-radius:14px;box-shadow:0 4px 12px #152f3d08;padding:14px 18px;display:flex;flex-direction:column;align-items:stretch;gap:9px;width:100%;text-align:left;color:var(--ink);position:relative;z-index:1;transition:background .15s,border-color .15s,box-shadow .15s}
 .anchor-box:hover{border-color:#92b1b6;box-shadow:0 5px 20px #163d4c16}.anchor-box.active{border-color:#397d84;background:#f4faf9;box-shadow:0 0 0 3px #deeceb, var(--shadow)}
 .anchor-no{background:#eef1ef;border:1px solid #d7e0df;color:#6d675a;border-radius:9px;min-width:41px;height:41px;display:grid;place-items:center;font-size:11px;font-weight:750;font-variant-numeric:tabular-nums;flex-shrink:0}.anchor-box.active .anchor-no{background:#dcece9;border-color:#a9ceca;color:#1e686b}
 .anchor-info{min-width:0;flex:1}.anchor-name{display:block;font:normal 19px/1.25 Georgia,"Times New Roman",serif;letter-spacing:-.012em}.anchor-caption{display:block;font-size:10.5px;line-height:1.4;color:#859097;margin-top:4px}.anchor-toggle{font-size:23px;color:#68858b;padding-left:5px;font-weight:300;line-height:1}
-.anchor-cell{width:100%;min-width:0}
-.anchor-concept{font-size:12px;line-height:1.52;color:#516469;margin:9px 6px 0;padding:0 0 0 10px;border-left:2px solid #b7ceca;max-width:325px}
+.anchor-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}
+.anchor-concept{display:block;width:100%;box-sizing:border-box;font-size:11.5px;line-height:1.5;color:#566971;margin-top:1px;padding-top:9px;border-top:1px solid #e0eae7}
 .branch-area{display:flex;gap:var(--gap);align-items:flex-start;position:relative;min-height:0}.branch-area.empty{display:none}.branch-area:before{content:'';height:2px;width:var(--gap);position:absolute;top:41px;left:calc(-1 * var(--gap));background:#a8bdbf}.branch-area:after{content:'';width:6px;height:6px;position:absolute;top:39px;left:-5px;background:#5c8a8c;border-radius:50%}
 .branch-list{width:var(--c2);flex-shrink:0;background:white;border:1px solid #d5e0e0;border-radius:15px;box-shadow:var(--shadow);padding:13px;animation:enter .18s ease-out}
 .branch-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 3px 11px;border-bottom:1px solid #e7eceb;margin-bottom:9px}.branch-heading strong{font:normal 17px Georgia,serif}.branch-heading span{color:#839093;font-size:10px}.branch-heading small{font-size:11px;color:#7c898e}
@@ -128,11 +128,11 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 
 /* Hierarquia única da sentença: capítulos 1, 2 e 3; subitens numerados sem mudar de página. */
 .flow-chapter{min-height:73px;margin-bottom:20px;}
-.chapter-box{background:var(--navy);color:#f8fbfa;border:1px solid #294657;border-radius:14px;min-height:73px;display:flex;align-items:center;gap:13px;padding:12px 18px;position:relative;z-index:1;box-shadow:0 7px 20px rgba(19,43,55,.12);}
+.chapter-box{background:var(--navy);color:#f8fbfa;border:1px solid #294657;border-radius:14px;min-height:73px;display:flex;flex-direction:column;align-items:stretch;gap:11px;padding:12px 18px;position:relative;z-index:1;box-shadow:0 7px 20px rgba(19,43,55,.12);}
 .chapter-number{width:41px;height:41px;flex-shrink:0;display:grid;place-items:center;color:#fdfefe;background:#345866;border:1px solid #53717d;border-radius:9px;font-weight:800;font-size:16px;}
 .chapter-title{font:normal 21px/1.23 Georgia,"Times New Roman",serif;letter-spacing:-.01em;}
-.chapter-cell{width:100%;min-width:0}
-.chapter-concept{font-size:12px;line-height:1.52;color:#516469;margin:9px 6px 0;padding:0 0 0 10px;border-left:2px solid #99b5b1;max-width:325px}
+.chapter-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}
+.chapter-concept{display:block;width:100%;box-sizing:border-box;font-size:11.5px;line-height:1.5;color:#d7e6e6;margin-top:0;padding-top:9px;border-top:1px solid #547481}
 .anchor-subitem .anchor-box{padding-left:21px;}
 .anchor-first .anchor-box{border-color:#95b2b5;background:#f9fcfa;}
 .anchor-first .anchor-no{font-size:15px;background:#daeae7;color:#205c62;border-color:#9dc7bf;}
@@ -223,9 +223,9 @@ function render(){
   : (a.num.startsWith('3.') && (i===0 || !DATA[i-1].num.startsWith('3.')))
   ? renderChapter('3','Dispositivo') : '';
  return chapter+`<div class="flow-row ${a.id==='relatorio'?'anchor-first':'anchor-subitem'} ${query?(fit?'highlight':'faded'):''}" id="row-${esc(a.id)}">
-    <div class="anchor-cell"><button class="anchor-box ${isOpen?'active':''}" aria-expanded="${isOpen}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
-      <span class="anchor-no">${esc(a.num)}</span><span class="anchor-info"><span class="anchor-name">${esc(a.title)}</span><span class="anchor-caption">${esc(a.subtitle)}</span></span><span class="anchor-toggle" aria-hidden="true">${isOpen?'−':'+'}</span></button>
-    <p class="anchor-concept">${esc(a.concept)}</p></div>
+    <button class="anchor-box ${isOpen?'active':''}" aria-expanded="${isOpen}" aria-controls="branch-${esc(a.id)}" onclick="toggleAnchor('${esc(a.id)}')">
+      <span class="anchor-head"><span class="anchor-no">${esc(a.num)}</span><span class="anchor-info"><span class="anchor-name">${esc(a.title)}</span><span class="anchor-caption">${esc(a.subtitle)}</span></span><span class="anchor-toggle" aria-hidden="true">${isOpen?'−':'+'}</span></span>
+      <span class="anchor-concept">${esc(a.concept)}</span></button>
     <div class="branch-area ${isOpen?'':'empty'}" id="branch-${esc(a.id)}">${isOpen?renderBranch(a):''}</div>
    </div>`
  }).join('');
@@ -240,9 +240,9 @@ function renderChapter(num,label){
   '3':'É a parte conclusiva da sentença, na qual o juiz anuncia as decisões sobre os pedidos e estabelece os comandos que deverão ser cumpridos.'
  };
  return `<div class="flow-row flow-chapter" role="group" aria-label="${esc(num+' — '+label)}">
-   <div class="chapter-cell"><div class="chapter-box"><span class="chapter-number">${esc(num)}</span>
+   <div class="chapter-box"><div class="chapter-head"><span class="chapter-number">${esc(num)}</span>
    <span class="chapter-title">${esc(label)}</span></div>
-   <p class="chapter-concept">${esc(concepts[num]||'')}</p></div></div>`;
+   <span class="chapter-concept">${esc(concepts[num]||'')}</span></div></div>`;
 }
 function spinLabel(a,j){return a.num+'.'+(j+1)}
 function renderBranch(a){return `<div class="branch-list">

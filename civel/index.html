@@ -93,6 +93,10 @@ button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus
 .anchor-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}
 .anchor-concept{display:block;width:100%;box-sizing:border-box;font-size:11.5px;line-height:1.5;color:#566971;margin-top:1px;padding-top:9px;border-top:1px solid #e0eae7}
 .branch-area{display:flex;gap:var(--gap);align-items:flex-start;position:relative;min-height:0}.branch-area.empty{display:none}.branch-area:before{content:'';height:2px;width:var(--gap);position:absolute;top:41px;left:calc(-1 * var(--gap));background:#a8bdbf}.branch-area:after{content:'';width:6px;height:6px;position:absolute;top:39px;left:-5px;background:#5c8a8c;border-radius:50%}
+.branch-connections{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;overflow:visible}
+.branch-connections path{fill:none;stroke:#83aca8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.branch-connections circle{fill:#488b85;stroke:white;stroke-width:1.5}
+.branch-area.linked .detail-panel:before,.branch-area.linked .detail-panel:after,.branch-area.linked .statute-panel:before,.branch-area.linked .statute-panel:after{display:none}
 .branch-list{width:var(--c2);flex-shrink:0;background:white;border:1px solid #d5e0e0;border-radius:15px;box-shadow:var(--shadow);padding:13px;animation:enter .18s ease-out}
 .branch-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 3px 11px;border-bottom:1px solid #e7eceb;margin-bottom:9px}.branch-heading strong{font:normal 17px Georgia,serif}.branch-heading span{color:#839093;font-size:10px}.branch-heading small{font-size:11px;color:#7c898e}
 .spin-group{border:1px solid #dce8e5;border-radius:11px;background:#f7faf9;margin:8px 0}
@@ -241,7 +245,8 @@ function render(){
  document.querySelector('#stats').textContent=`${DATA.length} âncoras · ${count} desdobramentos · fluxo único`;
  const reviewed=Object.keys(reviewValues).filter(k=>REVIEW_IDS.has(k)).length;
  document.querySelector('#review-summary').textContent=`Validações pessoais: ${reviewed}/${REVIEW_IDS.size} · salvas neste navegador`;
- flow.style.setProperty('--scale',scale); flow.classList.toggle('law-open',Boolean(activeStatute||activeCase||activeSources||activeTopic!==null));
+ const inlinePremise=activeAnchor==='merito'&&activeSpinGroup==='premissas-julgamento'&&activeSpin===0;
+ flow.style.setProperty('--scale',scale);flow.classList.toggle('law-open',Boolean(activeStatute||activeCase||activeSources||(activeTopic!==null&&!inlinePremise)));
  flow.innerHTML=DATA.map((a,i)=>{
  const isOpen=activeAnchor===a.id, fit=matched(a,query);
  const part=a.num.startsWith('2.')?'2':a.num.startsWith('3.')?'3':null;
@@ -260,7 +265,56 @@ function render(){
  document.querySelector('#closeall').disabled=!(activeAnchor||expandedChapters['2']||expandedChapters['3']);
  document.querySelector('#zoomlabel').textContent=Math.round(scale*100)+'%';
  document.querySelector('#recall').textContent=recall?'Revelar conteúdo':'Modo recordar';
- requestAnimationFrame(refreshFloatingScroll);
+ requestAnimationFrame(()=>{alignBranchPanels();refreshFloatingScroll()});
+}
+// Cada painel nasce na altura da seleção que o originou, não no topo da coluna.
+// A conexão SVG é desenhada do botão selecionado até a borda da ficha aberta.
+function alignBranchPanels(){
+ const row=activeAnchor?document.querySelector('#row-'+activeAnchor):null;
+ const area=row?.querySelector?.('.branch-area:not(.empty)');
+ if(!area||typeof area.getBoundingClientRect!=='function')return;
+ const detail=area.querySelector('.detail-panel');
+ const last=area.querySelector('.statute-panel');
+ const selected=area.querySelector('.branch-list .spin-item.active');
+ const overlay=area.querySelector('.branch-connections');
+ if(!overlay)return;
+ const bounds=area.getBoundingClientRect();
+ if(!bounds.width)return;
+ const ratio=(area.clientWidth||bounds.width)/bounds.width;
+ const localRect=el=>{
+  const b=el.getBoundingClientRect();
+  return {left:(b.left-bounds.left)*ratio,right:(b.right-bounds.left)*ratio,top:(b.top-bounds.top)*ratio,midY:(b.top+b.height/2-bounds.top)*ratio};
+ };
+ const connectorHeight=31;
+ if(detail&&selected){
+  const source=localRect(selected);
+  detail.style.marginTop=Math.max(0,Math.round(source.midY-connectorHeight))+'px';
+ }
+ if(last&&detail){
+  const trigger=detail.querySelector('.inline-ref[aria-pressed="true"],.law-button.active,.charges-trigger[aria-expanded="true"],.topic-nav-item.active');
+  const source=localRect(trigger||detail);
+  const desiredY=trigger?source.midY:source.top+connectorHeight;
+  last.style.marginTop=Math.max(0,Math.round(desiredY-connectorHeight))+'px';
+ }
+ let links='';
+ const line=(from,to)=>{
+  const start=localRect(from),end=localRect(to);
+  const x1=Math.round(start.right),y1=Math.round(start.midY),x2=Math.round(end.left),y2=Math.round(end.top+connectorHeight);
+  if(x2<=x1)return '';
+  const mid=Math.round((x1+x2)/2);
+  const d=Math.abs(y1-y2)<=2?`M ${x1} ${y1} L ${x2} ${y2}`:`M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`;
+  return `<path d="${d}"/><circle cx="${x1}" cy="${y1}" r="3"/><circle cx="${x2}" cy="${y2}" r="3.5"/>`;
+ };
+ if(detail&&selected)links+=line(selected,detail);
+ if(last&&detail){
+  const trigger=detail.querySelector('.inline-ref[aria-pressed="true"],.law-button.active,.charges-trigger[aria-expanded="true"],.topic-nav-item.active')||detail;
+  links+=line(trigger,last);
+ }
+ area.classList.toggle('linked',Boolean(links));
+ const width=Math.max(area.clientWidth||0,Math.ceil(bounds.width*ratio),1);
+ const height=Math.max(area.clientHeight||0,1);
+ overlay.setAttribute('viewBox',`0 0 ${width} ${height}`);
+ overlay.innerHTML=links;
 }
 function renderChapter(num,label){
  const concepts={

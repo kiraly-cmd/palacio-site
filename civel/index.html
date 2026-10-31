@@ -372,6 +372,7 @@ function renderInlineSubtopicDetail(s,a,j){
  const checks=(t.checks||[]).map((check,i)=>renderReviewChecklist(t,i,t.inlineCitations?renderInlineReferences(check):esc(check))).join('');
  return `<article class="detail-panel" data-inline-subtopic="true"><button class="detail-close" aria-label="Fechar a ficha" onclick="toggleInlineTopic(${j},${k})">×</button>
  <span class="detail-eyebrow">Premissas de Julgamento</span><h2><span class="detail-number">${esc(spinLabel(a,j)+'.'+(k+1))}</span>${esc(t.title)}</h2>
+ ${s.note?'<p class="topic-prompt">'+esc(s.note)+'</p>':''}
  ${t.norm?'<div class="detail-norm">'+esc(t.norm)+'</div>':''}
  ${renderLawButtons(t.norm,{onlyMissing:true,checks:t.checks||[]})}
  ${recall?'<div class="notice"><b>Modo recordar</b>Recupere mentalmente os pontos antes de revelar o conteúdo.</div>':'<h3>O que conferir</h3><ul>'+checks+'</ul>'}

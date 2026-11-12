@@ -1,0 +1,833 @@
+{
+  "tipo": "indice_publico_legislacao_tjsc_pendentes",
+  "data_base": "2026-11-11",
+  "atualizado_apos_fechamento": "2026-11-11",
+  "fonte": "Base Mestre privada — índice temático de legislação prioritária TJSC",
+  "metas_prioritarias_pendentes": 264,
+  "normas_pendentes": 75,
+  "metas_extras_fora_indice": 30,
+  "grupos": [
+    {
+      "nome": "Constitucional",
+      "quantidade_metas": 32,
+      "normas": [
+        {
+          "nome": "Constituição Federal",
+          "quantidade_metas": 32,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Civil",
+      "quantidade_metas": 27,
+      "normas": [
+        {
+          "nome": "Código Civil",
+          "quantidade_metas": 27,
+          "metas_pendentes": [
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Processual Civil e meios adequados",
+      "quantidade_metas": 33,
+      "normas": [
+        {
+          "nome": "Código de Processo Civil",
+          "quantidade_metas": 30,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30"
+          ]
+        },
+        {
+          "nome": "Lei 11.419/2006 — processo eletrônico",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 13.140/2015 — mediação",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 9.307/1996 — arbitragem",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Penal",
+      "quantidade_metas": 22,
+      "normas": [
+        {
+          "nome": "Código Penal",
+          "quantidade_metas": 18,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18"
+          ]
+        },
+        {
+          "nome": "Lei 15.358/2026 — combate ao crime organizado",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Decreto-Lei 201/1967 — responsabilidade de prefeitos",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 13.260/2016 — terrorismo",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "unica"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Processual Penal e execução",
+      "quantidade_metas": 22,
+      "normas": [
+        {
+          "nome": "Código de Processo Penal",
+          "quantidade_metas": 17,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 213/2015 — audiência de custódia",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 113/2010 — execução penal e medidas de segurança",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "Total sem anexo"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 369/2021 — prisão de gestantes e responsáveis",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 427/2021 — proteção de vítimas/testemunhas",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "Completo"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Penal Militar",
+      "quantidade_metas": 6,
+      "normas": [
+        {
+          "nome": "Decreto-Lei 1.001/1969 — Código Penal Militar",
+          "quantidade_metas": 6,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Tributário e execução fiscal",
+      "quantidade_metas": 31,
+      "normas": [
+        {
+          "nome": "LC 123/2006 — Simples Nacional e microempresas",
+          "quantidade_metas": 10,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"
+          ]
+        },
+        {
+          "nome": "Código Tributário Nacional",
+          "quantidade_metas": 8,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nome": "LC 214/2025 — reforma tributária",
+          "quantidade_metas": 6,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3 arts 47 a 62",
+            "4 arts 112 a 124",
+            "11",
+            "12 arts 370 a 383"
+          ]
+        },
+        {
+          "nome": "LC 87/1996 — Lei Kandir",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Lei 6.830/1980 — execução fiscal",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "LC/SC 465/2009 — Tribunal Administrativo Tributário",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "Total"
+          ]
+        },
+        {
+          "nome": "Lei 8.397/1992 — cautelar fiscal",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei/SC 10.297/1996 — ICMS",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Administrativo e servidores",
+      "quantidade_metas": 8,
+      "normas": [
+        {
+          "nome": "Lei/SC 6.745/1985 — Estatuto dos Servidores",
+          "quantidade_metas": 4,
+          "metas_pendentes": [
+            "Arts 1 a 41",
+            "Arts 42 a 97",
+            "Arts 98 a 134",
+            "Arts 135 a 197"
+          ]
+        },
+        {
+          "nome": "LC/SC 491/2010 — processo administrativo disciplinar",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "Arts 1 a 34",
+            "Arts 35 ao final"
+          ]
+        },
+        {
+          "nome": "Lei 8.429/1992 — improbidade administrativa",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Financeiro e orçamento",
+      "quantidade_metas": 6,
+      "normas": [
+        {
+          "nome": "LC 101/2000 — responsabilidade fiscal",
+          "quantidade_metas": 3,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nome": "Lei 4.320/1964 — finanças públicas",
+          "quantidade_metas": 3,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Ambiental e biodiversidade",
+      "quantidade_metas": 9,
+      "normas": [
+        {
+          "nome": "Lei/SC 14.675/2009 — Código Estadual do Meio Ambiente",
+          "quantidade_metas": 4,
+          "metas_pendentes": [
+            "Arts 1 a 28",
+            "Arts 29 a 113",
+            "Arts 114 a 193",
+            "Arts 194 ao final"
+          ]
+        },
+        {
+          "nome": "Lei 13.123/2015 — patrimônio genético",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 14.785/2023 — agrotóxicos",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "Lei 14.785 2023 substituta"
+          ]
+        },
+        {
+          "nome": "Lei 9.795/1999 — educação ambiental",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CONAMA 237/1997 — licenciamento",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CONAMA 378/2006 — licenciamento",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Urbanístico e imobiliário",
+      "quantidade_metas": 9,
+      "normas": [
+        {
+          "nome": "Lei 4.591/1964 — condomínios e incorporações",
+          "quantidade_metas": 3,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nome": "Lei/SC 17.492/2018 — urbanismo e parcelamento do solo",
+          "quantidade_metas": 3,
+          "metas_pendentes": [
+            "Arts 1 a 11",
+            "Arts 12 a 22",
+            "Arts 23 a 52"
+          ]
+        },
+        {
+          "nome": "Lei 9.514/1997 — financiamento imobiliário",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Lei 10.931/2004 — patrimônio de afetação",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Empresarial, cambiário e propriedade intelectual",
+      "quantidade_metas": 18,
+      "normas": [
+        {
+          "nome": "Lei 11.101/2005 — recuperação judicial e falências",
+          "quantidade_metas": 7,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "nome": "Lei 9.279/1996 — propriedade industrial",
+          "quantidade_metas": 4,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "nome": "Decreto 57.663/1966 — Lei Uniforme de Genebra",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Decreto-Lei 911/1969 — alienação fiduciária",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 12.965/2014 — Marco Civil da Internet",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 5.474/1968 — duplicatas",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 7.357/1985 — cheque",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 9.492/1997 — protesto",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Consumidor e saúde suplementar",
+      "quantidade_metas": 4,
+      "normas": [
+        {
+          "nome": "Lei 9.656/1998 — planos privados de saúde",
+          "quantidade_metas": 4,
+          "metas_pendentes": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Infância, juventude e família",
+      "quantidade_metas": 16,
+      "normas": [
+        {
+          "nome": "Decreto 3.087/1999 — adoção internacional",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Decreto 99.710/1990 — Convenção Direitos da Criança",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Regras de Beijing — justiça juvenil",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Declaração dos Direitos da Criança",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Decreto 3.413/2000 — subtração internacional de crianças",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Decreto 9.603/2018 — escuta protegida",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Diretrizes de Riad — justiça juvenil",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 10.216/2001 — saúde mental",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 13.257/2016 — primeira infância",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 14.344/2022 — Henry Borel",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 165/2012 — medidas socioeducativas",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 295/2019 — viagem de crianças",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 330/2020 — audiências socioeducativas por vídeo (revogada)",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Direitos humanos, povos tradicionais e inclusão",
+      "quantidade_metas": 5,
+      "normas": [
+        {
+          "nome": "Decreto 6.949/2009 — direitos de pessoas com deficiência",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Lei 6.001/1973 — Estatuto do Índio",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Declaração Universal dos Direitos Humanos",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Organização judiciária e magistratura",
+      "quantidade_metas": 8,
+      "normas": [
+        {
+          "nome": "LC/SC 367/2006 — magistratura catarinense",
+          "quantidade_metas": 3,
+          "metas_pendentes": [
+            "Arts 1 a 30",
+            "Arts 31 a 69",
+            "Arts 70 ao final"
+          ]
+        },
+        {
+          "nome": "LC/SC 339/2006 — organização judiciária",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "Arts 1 a 42",
+            "Arts 43 a 80"
+          ]
+        },
+        {
+          "nome": "Código de Ética da Magistratura",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "LC/SC 413/2008 — organização judiciária",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Recomendação CNJ 134/2022 — versão atualizada",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Registros públicos e notarial",
+      "quantidade_metas": 5,
+      "normas": [
+        {
+          "nome": "Provimento CNJ 149/2023 — normas extrajudiciais",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Lei 14.382/2022 — SERP",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 8.935/1994 — serviços notariais",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CNJ 35/2007 — atos extrajudiciais de família",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "nome": "Previdenciário e assistência social",
+      "quantidade_metas": 3,
+      "normas": [
+        {
+          "nome": "Lei 8.742/1993 — LOAS",
+          "quantidade_metas": 2,
+          "metas_pendentes": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "LC/SC 412/2008 — RPPS catarinense",
+          "quantidade_metas": 1,
+          "metas_pendentes": [
+            "1"
+          ]
+        }
+      ]
+    }
+  ]
+}

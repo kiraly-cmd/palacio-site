@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#203746">
+<meta name="description" content="Consulta de metas de legislação prioritária TJSC pendentes por disciplina no Palácio da Magistratura.">
+<title>Legislação pendente | Palácios da Memória</title>
+<style>
+:root{color-scheme:light;--ink:#203746;--muted:#60727c;--teal:#246b72;--line:#d4dcd9;--paper:#f3f5f4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+header{background:#fdfdfb;border-bottom:1px solid #dfe5e4}
+.header-inner{max-width:1120px;padding:20px 25px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}
+a{color:var(--teal)}.back{text-decoration:none;font-weight:700}.back:hover{text-decoration:underline}
+main{max-width:1120px;margin:0 auto;padding:58px 25px 75px}
+.kicker{font-size:12px;color:var(--teal);font-weight:800;text-transform:uppercase;letter-spacing:.14em}
+h1{font:clamp(36px,5.3vw,55px)/1.13 Georgia,"Times New Roman",serif;letter-spacing:-.03em;margin:12px 0 16px}
+.lead{max-width:780px;color:#536b74;font-size:16px;margin:0 0 26px}
+.numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:25px 0}
+.stat{border:1px solid #d8e0df;background:#fdfdfb;border-radius:14px;padding:19px 21px}.stat strong{display:block;font:34px/1.1 Georgia,serif}.stat span{font-size:13px;color:var(--muted);display:block;margin-top:6px}
+.meta{font-size:13px;color:var(--muted);margin:0 0 28px}.meta strong{color:var(--ink)}
+.controls{display:flex;justify-content:space-between;gap:13px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+.search{width:min(100%,460px);border:1px solid #bdccca;border-radius:12px;padding:13px 15px;background:white;color:var(--ink);font:inherit}
+.buttons{display:flex;gap:8px;flex-wrap:wrap}
+button{background:white;border:1px solid #c4d1d0;padding:11px 13px;border-radius:10px;color:var(--ink);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+button:hover{border-color:#246b72}
+:focus-visible{outline:3px solid #246b72;outline-offset:3px}
+.info{margin:0 0 16px;color:var(--muted);font-size:13px}
+#groups{display:grid;gap:11px}
+.group{background:#fff;border:1px solid #d3dedd;border-radius:14px;overflow:hidden}
+.group summary{cursor:pointer;list-style:none;padding:18px 21px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.group summary::-webkit-details-marker{display:none}
+.group summary::before{content:"+";font-size:23px;color:var(--teal);line-height:1;flex:0 0 19px}
+.group[open] summary::before{content:"−"}
+.group-title{font-weight:750;flex:1}.group-count{color:var(--muted);font-size:13px;white-space:nowrap}
+.norms{border-top:1px solid #e4eae8;padding:5px 20px 14px}
+.norm{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:12px 0;border-bottom:1px solid #edf1f0}
+.norm:last-child{border-bottom:0}.norm-title{font-weight:600}.norm-metas{color:var(--muted);font-size:12px;margin-top:3px;word-break:break-word}.count{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:800;color:#226c70}
+.empty,.error{padding:20px;background:white;border:1px solid var(--line);border-radius:12px;color:var(--muted)}
+.footnote{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);max-width:880px}
+footer{padding:22px;text-align:center;color:#7b8a8f;font-size:12px}
+@media(max-width:650px){main{padding:37px 16px 55px}.header-inner{padding:16px}.numbers{gap:8px}.stat{padding:13px 12px}.stat strong{font-size:27px}.stat span{font-size:11px}.group summary{padding:15px 13px;gap:9px}.group-count{font-size:11px}.norms{padding:5px 12px 12px}.norm-title{font-size:14px}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><div class="brand">Magistratura · Palácios da Memória</div><a class="back" href="../">← Voltar ao Palácio</a></div></header>
+<main>
+<div class="kicker">Consulta provisória · Plano TJSC</div>
+<h1>Legislação pendente</h1>
+<p class="lead">Normas prioritárias ainda não concluídas, organizadas por disciplina. Consulte as metas restantes de cada diploma e acompanhe a redução do saldo após os fechamentos diários.</p>
+<div class="numbers" aria-label="Resumo de pendências">
+<div class="stat"><strong id="total-metas">—</strong><span>Metas prioritárias</span></div>
+<div class="stat"><strong id="total-normas">—</strong><span>Normas pendentes</span></div>
+<div class="stat"><strong id="total-grupos">—</strong><span>Disciplinas</span></div>
+</div>
+<p class="meta" id="source-date">Carregando último fechamento confirmado…</p>
+<div class="controls"><input class="search" id="search" type="search" placeholder="Buscar disciplina, lei, código, resolução…" aria-label="Pesquisar normas e disciplinas"><div class="buttons"><button id="expand" type="button">Expandir todos</button><button id="collapse" type="button">Recolher todos</button></div></div>
+<p class="info" id="result-info" role="status" aria-live="polite">Carregando relação…</p>
+<section id="groups" aria-label="Normas pendentes por disciplina"></section>
+<p class="footnote"><strong>Como funciona:</strong> esta relação é uma cópia de consulta do último fechamento oficial na Base Mestre. Atividades registradas durante um dia aberto só aparecem depois do fechamento e da sincronização deste arquivo. As metas extras facultativas não estão incluídas nos totais prioritários. O <a href="https://github.com/kiraly-cmd/palacio-site/blob/main/normas/dados.json">arquivo de consulta</a> pode ser conferido no GitHub. Este painel é temporário e poderá ser desativado quando todas as metas forem concluídas.</p>
+</main><footer>Palácios da Memória · Magistratura</footer>
+<script>
+"use strict";
+const groupsEl=document.getElementById("groups");
+const searchEl=document.getElementById("search");
+const statusEl=document.getElementById("result-info");
+let source=null;
+const normal=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function render(){
+ if(!source)return;
+ const term=normal(searchEl.value.trim());groupsEl.innerHTML="";
+ let visibleNorms=0,visibleMetas=0,visibleGroups=0;
+ for(const group of source.grupos){
+   const matchGroup=normal(group.nome).includes(term);
+   const norms=group.normas.filter(n=>!term||matchGroup||normal(n.nome).includes(term)||n.metas_pendentes.some(m=>normal(m).includes(term)));
+   if(!norms.length)continue;
+   visibleGroups++;visibleNorms+=norms.length;visibleMetas+=norms.reduce((s,n)=>s+n.quantidade_metas,0);
+   const details=document.createElement("details");details.className="group";details.open=!!term;
+   const summary=document.createElement("summary");
+   const title=document.createElement("span");title.className="group-title";title.textContent=group.nome;
+   const count=document.createElement("span");count.className="group-count";count.textContent=norms.length+" normas · "+norms.reduce((s,n)=>s+n.quantidade_metas,0)+" metas";
+   summary.append(title,count);details.append(summary);
+   const list=document.createElement("div");list.className="norms";
+   for(const n of norms){
+     const item=document.createElement("div");item.className="norm";
+     const left=document.createElement("div");const heading=document.createElement("div");heading.className="norm-title";heading.textContent=n.nome;
+     const metas=document.createElement("div");metas.className="norm-metas";metas.textContent="Metas pendentes: "+n.metas_pendentes.join(", ");
+     left.append(heading,metas);
+     const right=document.createElement("span");right.className="count";right.textContent=String(n.quantidade_metas);
+     right.setAttribute("aria-label",n.quantidade_metas+" metas pendentes");
+     item.append(left,right);list.append(item);
+   }
+   details.append(list);groupsEl.append(details);
+ }
+ if(!visibleGroups){groupsEl.innerHTML='<p class="empty">Nenhuma norma encontrada para essa pesquisa.</p>';}
+ statusEl.textContent=term?visibleNorms+" normas · "+visibleMetas+" metas encontradas em "+visibleGroups+" disciplinas.":"Relação completa: "+visibleNorms+" normas distribuídas em "+visibleGroups+" disciplinas.";
+}
+document.getElementById("expand").addEventListener("click",()=>{document.querySelectorAll("details.group").forEach(e=>e.open=true)});
+document.getElementById("collapse").addEventListener("click",()=>{document.querySelectorAll("details.group").forEach(e=>e.open=false)});
+searchEl.addEventListener("input",render);
+fetch("./dados.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(data=>{
+ if(!Array.isArray(data.grupos)||typeof data.metas_prioritarias_pendentes!=="number")throw new Error("Estrutura de dados inválida");
+ source=data;document.getElementById("total-metas").textContent=data.metas_prioritarias_pendentes.toLocaleString("pt-BR");
+ document.getElementById("total-normas").textContent=data.normas_pendentes.toLocaleString("pt-BR");
+ document.getElementById("total-grupos").textContent=data.grupos.length.toLocaleString("pt-BR");
+ const parts=data.atualizado_apos_fechamento.split("-");
+ document.getElementById("source-date").innerHTML="<strong>Último fechamento sincronizado: "+escapeHtml(parts.reverse().join("/"))+"</strong> · "+data.metas_extras_fora_indice+" metas extras facultativas fora deste painel.";
+ render();
+}).catch(()=>{statusEl.textContent="Não foi possível carregar a relação.";groupsEl.innerHTML='<p class="error">Tente recarregar a página. Se o problema persistir, consulte o arquivo de dados pelo link abaixo.</p>';});
+</script></body></html>

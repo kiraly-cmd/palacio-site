@@ -1,10 +1,10 @@
 {
   "tipo": "indice_publico_legislacao_tjsc_pendentes",
-  "data_base": "2026-11-11",
-  "atualizado_apos_fechamento": "2026-11-11",
+  "data_base": "2026-11-12",
+  "atualizado_apos_fechamento": "2026-11-12",
   "fonte": "Base Mestre privada — índice temático de legislação prioritária TJSC",
-  "metas_prioritarias_pendentes": 264,
-  "normas_pendentes": 75,
+  "metas_prioritarias_pendentes": 260,
+  "normas_pendentes": 72,
   "metas_extras_fora_indice": 30,
   "grupos": [
     {
@@ -53,13 +53,12 @@
     },
     {
       "nome": "Civil",
-      "quantidade_metas": 27,
+      "quantidade_metas": 26,
       "normas": [
         {
           "nome": "Código Civil",
-          "quantidade_metas": 27,
+          "quantidade_metas": 26,
           "metas_pendentes": [
-            "3",
             "4",
             "5",
             "6",
@@ -92,7 +91,7 @@
     },
     {
       "nome": "Processual Civil e meios adequados",
-      "quantidade_metas": 33,
+      "quantidade_metas": 31,
       "normas": [
         {
           "nome": "Código de Processo Civil",
@@ -128,20 +127,6 @@
             "28",
             "29",
             "30"
-          ]
-        },
-        {
-          "nome": "Lei 11.419/2006 — processo eletrônico",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "1"
-          ]
-        },
-        {
-          "nome": "Lei 13.140/2015 — mediação",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "1"
           ]
         },
         {
@@ -731,7 +716,7 @@
     },
     {
       "nome": "Organização judiciária e magistratura",
-      "quantidade_metas": 8,
+      "quantidade_metas": 7,
       "normas": [
         {
           "nome": "LC/SC 367/2006 — magistratura catarinense",
@@ -748,13 +733,6 @@
           "metas_pendentes": [
             "Arts 1 a 42",
             "Arts 43 a 80"
-          ]
-        },
-        {
-          "nome": "Código de Ética da Magistratura",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "1"
           ]
         },
         {

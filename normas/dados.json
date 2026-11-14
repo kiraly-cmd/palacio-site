@@ -1,10 +1,10 @@
 {
   "tipo": "indice_publico_legislacao_tjsc_pendentes",
-  "data_base": "2026-11-12",
-  "atualizado_apos_fechamento": "2026-11-12",
+  "data_base": "2026-11-13",
+  "atualizado_apos_fechamento": "2026-11-13",
   "fonte": "Base Mestre privada — índice temático de legislação prioritária TJSC",
-  "metas_prioritarias_pendentes": 260,
-  "normas_pendentes": 72,
+  "metas_prioritarias_pendentes": 256,
+  "normas_pendentes": 69,
   "metas_extras_fora_indice": 30,
   "grupos": [
     {
@@ -140,7 +140,7 @@
     },
     {
       "nome": "Penal",
-      "quantidade_metas": 22,
+      "quantidade_metas": 18,
       "normas": [
         {
           "nome": "Código Penal",
@@ -164,28 +164,6 @@
             "16",
             "17",
             "18"
-          ]
-        },
-        {
-          "nome": "Lei 15.358/2026 — combate ao crime organizado",
-          "quantidade_metas": 2,
-          "metas_pendentes": [
-            "1",
-            "2"
-          ]
-        },
-        {
-          "nome": "Decreto-Lei 201/1967 — responsabilidade de prefeitos",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "1"
-          ]
-        },
-        {
-          "nome": "Lei 13.260/2016 — terrorismo",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "unica"
           ]
         }
       ]

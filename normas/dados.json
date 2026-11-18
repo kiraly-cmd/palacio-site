@@ -1,10 +1,10 @@
 {
   "tipo": "indice_publico_legislacao_tjsc_pendentes",
-  "data_base": "2026-11-16",
-  "atualizado_apos_fechamento": "2026-11-16",
+  "data_base": "2026-11-17",
+  "atualizado_apos_fechamento": "2026-11-17",
   "fonte": "Base Mestre privada — índice temático de legislação prioritária TJSC",
-  "metas_prioritarias_pendentes": 248,
-  "normas_pendentes": 69,
+  "metas_prioritarias_pendentes": 244,
+  "normas_pendentes": 68,
   "metas_extras_fora_indice": 30,
   "grupos": [
     {
@@ -53,15 +53,12 @@
     },
     {
       "nome": "Civil",
-      "quantidade_metas": 18,
+      "quantidade_metas": 15,
       "normas": [
         {
           "nome": "Código Civil",
-          "quantidade_metas": 18,
+          "quantidade_metas": 15,
           "metas_pendentes": [
-            "12",
-            "13",
-            "14",
             "15",
             "16",
             "17",
@@ -238,7 +235,7 @@
     },
     {
       "nome": "Tributário e execução fiscal",
-      "quantidade_metas": 31,
+      "quantidade_metas": 30,
       "normas": [
         {
           "nome": "LC 123/2006 — Simples Nacional e microempresas",
@@ -303,13 +300,6 @@
           "quantidade_metas": 1,
           "metas_pendentes": [
             "Total"
-          ]
-        },
-        {
-          "nome": "Lei 8.397/1992 — cautelar fiscal",
-          "quantidade_metas": 1,
-          "metas_pendentes": [
-            "1"
           ]
         },
         {

@@ -1,9 +1,9 @@
 {
   "tipo": "indice_publico_legislacao_tjsc_pendentes",
-  "data_base": "2026-11-18",
-  "atualizado_apos_fechamento": "2026-11-18",
+  "data_base": "2026-11-19",
+  "atualizado_apos_fechamento": "2026-11-19",
   "fonte": "Base Mestre privada — índice temático de legislação prioritária TJSC",
-  "metas_prioritarias_pendentes": 240,
+  "metas_prioritarias_pendentes": 237,
   "normas_pendentes": 68,
   "metas_extras_fora_indice": 30,
   "grupos": [
@@ -53,15 +53,12 @@
     },
     {
       "nome": "Civil",
-      "quantidade_metas": 11,
+      "quantidade_metas": 8,
       "normas": [
         {
           "nome": "Código Civil",
-          "quantidade_metas": 11,
+          "quantidade_metas": 8,
           "metas_pendentes": [
-            "19",
-            "20",
-            "21",
             "22",
             "23",
             "24",

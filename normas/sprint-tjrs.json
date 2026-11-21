@@ -4,9 +4,9 @@
   "data_decisao": "2026-11-21",
   "prazo_estudo_dias": 17,
   "capacidade_planejada_metas": 68,
-  "metas_selecionadas_iniciais": 43,
-  "vagas_nao_preenchidas": 25,
-  "nota": "Seleção de composição de blocos aprovada pelo usuário para exibição na página provisória. Não altera a meta diária nem os registros oficiais de execução. Código Civil permanece na fila global, fora do sprint. Metas selecionadas só são baixadas no fechamento oficial; bloco C contém todas as outras metas pendentes prioritárias TJSC.",
+  "metas_selecionadas_iniciais": 45,
+  "vagas_nao_preenchidas": 23,
+  "nota": "Seleção do Sprint TJRS para exibição na página provisória: Bloco A 14 metas; Bloco B 31 metas, incluindo as duas metas pendentes do Decreto 57.663/1966 (Lei Uniforme de Genebra), incluídas por solicitação expressa. Total 45/68, com 23 vagas não preenchidas. Não altera meta diária ou registros de execução; apenas os saldos fechados compõem o Bloco C.",
   "blocos": [
     {
       "id": "A",
@@ -139,6 +139,13 @@
           "nome": "Res. CONAMA 237/1997 — licenciamento",
           "metas": [
             "1"
+          ]
+        },
+        {
+          "nome": "Decreto 57.663/1966 — Lei Uniforme de Genebra",
+          "metas": [
+            "1",
+            "2"
           ]
         }
       ]

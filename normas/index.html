@@ -155,7 +155,7 @@ function render(){
  overviewEl.innerHTML="";
  overviewEl.append(card("Bloco A",countMetas(outputs[0].normas),"códigos pendentes"),card("Bloco B",countMetas(outputs[1].normas),"legislação especial pendente"),card("Bloco C",other,"demais metas TJSC"),card("Vagas TJRS",selection.vagas_nao_preenchidas,"a definir"));
  const note=document.createElement("p");note.className="sprint-note";
- note.textContent="Sprint TJRS: "+selection.metas_selecionadas_iniciais+" metas selecionadas (14 no A e 29 no B) em uma capacidade de "+selection.capacidade_planejada_metas+". "+selection.vagas_nao_preenchidas+" vagas ainda não preenchidas. Contadores dos blocos consideram apenas metas pendentes no último fechamento.";
+ note.textContent="Sprint TJRS: "+selection.metas_selecionadas_iniciais+" metas selecionadas ("+selection.blocos.map(b=>b.normas.reduce((total,n)=>total+n.metas.length,0)+" no "+b.id).join(" e ")+") em uma capacidade de "+selection.capacidade_planejada_metas+". "+selection.vagas_nao_preenchidas+" vagas ainda não preenchidas. Contadores dos blocos consideram apenas metas pendentes no último fechamento.";
  overviewEl.append(note);
  const defs=[...outputs.map(b=>({id:b.id,title:b.titulo,desc:"Metas selecionadas para o Sprint TJRS; somente as ainda pendentes são exibidas.",groups:[{nome:"Seleção TJRS",normas:b.normas}]})),{id:"C",title:"Bloco C - Demais pendentes do Plano Global TJSC",desc:"Metas prioritárias ainda não selecionadas para o Sprint TJRS, agrupadas por disciplina. Inclui diplomas parcialmente selecionados nos outros blocos.",groups:otherGroups}];
  for(const b of defs){

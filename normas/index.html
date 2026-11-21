@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#203746">
-<meta name="description" content="Consulta de metas de legislação prioritária TJSC pendentes por disciplina no Palácio da Magistratura.">
+<meta name="description" content="Consulta de legislação pendente TJSC, dividida entre Blocos A e B do Sprint TJRS e Bloco C do Plano Global.">
 <title>Legislação pendente | Palácios da Memória</title>
 <style>
 :root{color-scheme:light;--ink:#203746;--muted:#60727c;--teal:#246b72;--line:#d4dcd9;--paper:#f3f5f4}
@@ -28,7 +28,17 @@ button{background:white;border:1px solid #c4d1d0;padding:11px 13px;border-radius
 button:hover{border-color:#246b72}
 :focus-visible{outline:3px solid #246b72;outline-offset:3px}
 .info{margin:0 0 16px;color:var(--muted);font-size:13px}
-#groups{display:grid;gap:11px}
+.sprint-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:0 0 22px}
+.sprint-stat{border:1px solid #d8e0df;background:#fff;border-radius:12px;padding:14px 16px}.sprint-stat strong{display:block;font:27px/1.2 Georgia,serif}.sprint-stat span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.sprint-note{grid-column:1/-1;color:var(--muted);font-size:13px;margin:1px 0 2px}
+#groups{display:grid;gap:25px}
+.block{padding:22px;background:#fdfdfb;border:1px solid var(--line);border-radius:17px}
+.block-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:start;margin-bottom:8px}.block-head h2{font:clamp(23px,3.4vw,30px)/1.25 Georgia,serif;margin:0}
+.block-description{color:var(--muted);font-size:13px;margin:0 0 18px}
+.block-count{font-weight:800;color:var(--teal);font-size:13px;white-space:nowrap}
+.block-groups{display:grid;gap:11px}
+.block-empty{color:var(--muted);padding:12px 0}
+
 .group{background:#fff;border:1px solid #d3dedd;border-radius:14px;overflow:hidden}
 .group summary{cursor:pointer;list-style:none;padding:18px 21px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .group summary::-webkit-details-marker{display:none}
@@ -41,73 +51,143 @@ button:hover{border-color:#246b72}
 .empty,.error{padding:20px;background:white;border:1px solid var(--line);border-radius:12px;color:var(--muted)}
 .footnote{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);max-width:880px}
 footer{padding:22px;text-align:center;color:#7b8a8f;font-size:12px}
-@media(max-width:650px){main{padding:37px 16px 55px}.header-inner{padding:16px}.numbers{gap:8px}.stat{padding:13px 12px}.stat strong{font-size:27px}.stat span{font-size:11px}.group summary{padding:15px 13px;gap:9px}.group-count{font-size:11px}.norms{padding:5px 12px 12px}.norm-title{font-size:14px}}
+@media(max-width:650px){.sprint-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.block{padding:14px}.sprint-stat{padding:12px}main{padding:37px 16px 55px}.header-inner{padding:16px}.numbers{gap:8px}.stat{padding:13px 12px}.stat strong{font-size:27px}.stat span{font-size:11px}.group summary{padding:15px 13px;gap:9px}.group-count{font-size:11px}.norms{padding:5px 12px 12px}.norm-title{font-size:14px}}
 </style>
 </head>
 <body>
 <header><div class="header-inner"><div class="brand">Magistratura · Palácios da Memória</div><a class="back" href="../">← Voltar ao Palácio</a></div></header>
 <main>
-<div class="kicker">Consulta provisória · Plano TJSC</div>
+<div class="kicker">Consulta provisória · TJRS + Plano Global TJSC</div>
 <h1>Legislação pendente</h1>
-<p class="lead">Normas prioritárias ainda não concluídas, organizadas por disciplina. Consulte as metas restantes de cada diploma e acompanhe a redução do saldo após os fechamentos diários.</p>
+<p class="lead">Três blocos: A — Códigos selecionados para o Sprint TJRS; B — legislação especial selecionada; C — demais metas pendentes do Plano Global TJSC. A distribuição acompanha os fechamentos diários, sem duplicar metas.</p>
 <div class="numbers" aria-label="Resumo de pendências">
 <div class="stat"><strong id="total-metas">—</strong><span>Metas prioritárias</span></div>
 <div class="stat"><strong id="total-normas">—</strong><span>Normas pendentes</span></div>
 <div class="stat"><strong id="total-grupos">—</strong><span>Disciplinas</span></div>
 </div>
 <p class="meta" id="source-date">Carregando último fechamento confirmado…</p>
-<div class="controls"><input class="search" id="search" type="search" placeholder="Buscar disciplina, lei, código, resolução…" aria-label="Pesquisar normas e disciplinas"><div class="buttons"><button id="expand" type="button">Expandir todos</button><button id="collapse" type="button">Recolher todos</button></div></div>
+<section class="sprint-overview" id="sprint-overview" aria-label="Resumo do Sprint TJRS"></section>
+<div class="controls"><input class="search" id="search" type="search" placeholder="Buscar bloco, disciplina, lei, código, resolução…" aria-label="Pesquisar normas e disciplinas"><div class="buttons"><button id="expand" type="button">Expandir todos</button><button id="collapse" type="button">Recolher todos</button></div></div>
 <p class="info" id="result-info" role="status" aria-live="polite">Carregando relação…</p>
-<section id="groups" aria-label="Normas pendentes por disciplina"></section>
-<p class="footnote"><strong>Como funciona:</strong> esta relação é uma cópia de consulta do último fechamento oficial na Base Mestre. Atividades registradas durante um dia aberto só aparecem depois do fechamento e da sincronização deste arquivo. As metas extras facultativas não estão incluídas nos totais prioritários. O <a href="https://github.com/kiraly-cmd/palacio-site/blob/main/normas/dados.json">arquivo de consulta</a> pode ser conferido no GitHub. Este painel é temporário e poderá ser desativado quando todas as metas forem concluídas.</p>
+<section id="groups" aria-label="Blocos A, B e C de legislação pendente"></section>
+<p class="footnote"><strong>Como funciona:</strong> os saldos são uma cópia de consulta do último fechamento oficial na Base Mestre; a seleção TJRS está em arquivo separado. Atividades registradas durante um dia aberto só aparecem depois do fechamento e da sincronização deste arquivo. As metas extras facultativas não estão incluídas nos totais prioritários. Os <a href="https://github.com/kiraly-cmd/palacio-site/blob/main/normas/dados.json">dados das pendências</a> e a <a href="https://github.com/kiraly-cmd/palacio-site/blob/main/normas/sprint-tjrs.json">seleção do Sprint TJRS</a> podem ser conferidos no GitHub. Este painel é temporário e poderá ser desativado quando todas as metas forem concluídas.</p>
 </main><footer>Palácios da Memória · Magistratura</footer>
 <script>
 "use strict";
 const groupsEl=document.getElementById("groups");
 const searchEl=document.getElementById("search");
 const statusEl=document.getElementById("result-info");
-let source=null;
+const overviewEl=document.getElementById("sprint-overview");
+let source=null,selection=null;
 const normal=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function render(){
- if(!source)return;
- const term=normal(searchEl.value.trim());groupsEl.innerHTML="";
- let visibleNorms=0,visibleMetas=0,visibleGroups=0;
- for(const group of source.grupos){
-   const matchGroup=normal(group.nome).includes(term);
-   const norms=group.normas.filter(n=>!term||matchGroup||normal(n.nome).includes(term)||n.metas_pendentes.some(m=>normal(m).includes(term)));
-   if(!norms.length)continue;
-   visibleGroups++;visibleNorms+=norms.length;visibleMetas+=norms.reduce((s,n)=>s+n.quantidade_metas,0);
-   const details=document.createElement("details");details.className="group";details.open=!!term;
-   const summary=document.createElement("summary");
-   const title=document.createElement("span");title.className="group-title";title.textContent=group.nome;
-   const count=document.createElement("span");count.className="group-count";count.textContent=norms.length+" normas · "+norms.reduce((s,n)=>s+n.quantidade_metas,0)+" metas";
-   summary.append(title,count);details.append(summary);
-   const list=document.createElement("div");list.className="norms";
-   for(const n of norms){
-     const item=document.createElement("div");item.className="norm";
-     const left=document.createElement("div");const heading=document.createElement("div");heading.className="norm-title";heading.textContent=n.nome;
-     const metas=document.createElement("div");metas.className="norm-metas";metas.textContent="Metas pendentes: "+n.metas_pendentes.join(", ");
-     left.append(heading,metas);
-     const right=document.createElement("span");right.className="count";right.textContent=String(n.quantidade_metas);
-     right.setAttribute("aria-label",n.quantidade_metas+" metas pendentes");
-     item.append(left,right);list.append(item);
-   }
-   details.append(list);groupsEl.append(details);
+const countMetas=normas=>normas.reduce((total,n)=>total+n.metas_pendentes.length,0);
+function card(title,value,label){
+ const el=document.createElement("div");el.className="sprint-stat";
+ const strong=document.createElement("strong");strong.textContent=String(value);
+ const caption=document.createElement("span");caption.textContent=title+" · "+label;
+ el.append(strong,caption);return el;
+}
+function buildGroups(){
+ const reference=new Map();
+ for(const g of source.grupos)for(const n of g.normas)reference.set(n.nome,{...n,grupo:g.nome});
+ const used=new Set(),outputs=[];
+ for(const bloco of selection.blocos){
+  const norms=[];
+  for(const chosen of bloco.normas){
+   const found=reference.get(chosen.nome);if(!found)continue;
+   const pending=chosen.metas.filter(meta=>found.metas_pendentes.includes(meta));
+   if(!pending.length)continue;
+   for(const meta of pending){const key=chosen.nome+"\u0000"+meta;if(used.has(key))throw new Error("Meta duplicada no Sprint: "+key);used.add(key);}
+   norms.push({nome:chosen.nome,grupo:found.grupo,metas_pendentes:pending,quantidade_metas:pending.length});
+  }
+  outputs.push({id:bloco.id,titulo:bloco.titulo,normas:norms,selectedCount:bloco.normas.reduce((total,n)=>total+n.metas.length,0)});
  }
- if(!visibleGroups){groupsEl.innerHTML='<p class="empty">Nenhuma norma encontrada para essa pesquisa.</p>';}
- statusEl.textContent=term?visibleNorms+" normas · "+visibleMetas+" metas encontradas em "+visibleGroups+" disciplinas.":"Relação completa: "+visibleNorms+" normas distribuídas em "+visibleGroups+" disciplinas.";
+ const otherGroups=[];
+ for(const group of source.grupos){
+  const norms=[];
+  for(const n of group.normas){
+   const pending=n.metas_pendentes.filter(meta=>!used.has(n.nome+"\u0000"+meta));
+   if(pending.length)norms.push({nome:n.nome,grupo:group.nome,metas_pendentes:pending,quantidade_metas:pending.length});
+  }
+  if(norms.length)otherGroups.push({nome:group.nome,normas:norms});
+ }
+ const selected=outputs.reduce((sum,b)=>sum+countMetas(b.normas),0);
+ const other=otherGroups.reduce((sum,g)=>sum+countMetas(g.normas),0);
+ if(selected+other!==source.metas_prioritarias_pendentes)throw new Error("Conciliação de metas falhou: "+(selected+other));
+ return {outputs,otherGroups,selected,other};
+}
+function makeNorm(n){
+ const item=document.createElement("div");item.className="norm";
+ const left=document.createElement("div"),heading=document.createElement("div");heading.className="norm-title";heading.textContent=n.nome;
+ const metas=document.createElement("div");metas.className="norm-metas";metas.textContent="Metas pendentes: "+n.metas_pendentes.join(", ");
+ left.append(heading,metas);
+ const right=document.createElement("span");right.className="count";right.textContent=String(n.quantidade_metas);
+ right.setAttribute("aria-label",n.quantidade_metas+" metas pendentes");
+ item.append(left,right);return item;
+}
+function makeDetails(title,norms,term){
+ const details=document.createElement("details");details.className="group";details.open=!!term;
+ const summary=document.createElement("summary");
+ const label=document.createElement("span");label.className="group-title";label.textContent=title;
+ const count=document.createElement("span");count.className="group-count";count.textContent=norms.length+" normas · "+countMetas(norms)+" metas";
+ summary.append(label,count);details.append(summary);
+ const list=document.createElement("div");list.className="norms";
+ for(const n of norms)list.append(makeNorm(n));
+ details.append(list);return details;
+}
+function makeBlock(id,title,description,count,groups,term){
+ const section=document.createElement("section");section.className="block";section.id="bloco-"+id.toLowerCase();
+ const head=document.createElement("div");head.className="block-head";
+ const h=document.createElement("h2");h.textContent=title;
+ const total=document.createElement("span");total.className="block-count";total.textContent=count+" metas pendentes";
+ head.append(h,total);section.append(head);
+ const desc=document.createElement("p");desc.className="block-description";desc.textContent=description;section.append(desc);
+ const container=document.createElement("div");container.className="block-groups";
+ for(const g of groups)if(g.normas.length)container.append(makeDetails(g.nome,g.normas,term));
+ if(!container.children.length){const empty=document.createElement("p");empty.className="block-empty";empty.textContent="Nenhuma meta pendente encontrada neste bloco.";container.append(empty);}
+ section.append(container);return section;
+}
+function render(){
+ if(!source||!selection)return;
+ const term=normal(searchEl.value.trim());groupsEl.innerHTML="";
+ let {outputs,otherGroups,selected,other}=buildGroups(),visible=0,metas=0;
+ overviewEl.innerHTML="";
+ overviewEl.append(card("Bloco A",countMetas(outputs[0].normas),"códigos pendentes"),card("Bloco B",countMetas(outputs[1].normas),"legislação especial pendente"),card("Bloco C",other,"demais metas TJSC"),card("Vagas TJRS",selection.vagas_nao_preenchidas,"a definir"));
+ const note=document.createElement("p");note.className="sprint-note";
+ note.textContent="Sprint TJRS: "+selection.metas_selecionadas_iniciais+" metas selecionadas (14 no A e 29 no B) em uma capacidade de "+selection.capacidade_planejada_metas+". "+selection.vagas_nao_preenchidas+" vagas ainda não preenchidas. Contadores dos blocos consideram apenas metas pendentes no último fechamento.";
+ overviewEl.append(note);
+ const defs=[...outputs.map(b=>({id:b.id,title:b.titulo,desc:"Metas selecionadas para o Sprint TJRS; somente as ainda pendentes são exibidas.",groups:[{nome:"Seleção TJRS",normas:b.normas}]})),{id:"C",title:"Bloco C - Demais pendentes do Plano Global TJSC",desc:"Metas prioritárias ainda não selecionadas para o Sprint TJRS, agrupadas por disciplina. Inclui diplomas parcialmente selecionados nos outros blocos.",groups:otherGroups}];
+ for(const b of defs){
+  const blockMatches=normal(b.title).includes(term);
+  const shown=b.groups.map(g=>({nome:g.nome,normas:g.normas.filter(n=>!term||blockMatches||normal(g.nome).includes(term)||normal(n.nome).includes(term)||n.metas_pendentes.some(m=>normal(m).includes(term)))})).filter(g=>g.normas.length);
+  const c=shown.reduce((sum,g)=>sum+countMetas(g.normas),0),n=shown.reduce((sum,g)=>sum+g.normas.length,0);
+  if(!shown.length&&term)continue;
+  visible+=n;metas+=c;
+  groupsEl.append(makeBlock(b.id,b.title,b.desc,c,shown,term));
+ }
+ if(!groupsEl.children.length)groupsEl.innerHTML='<p class="empty">Nenhuma meta encontrada para essa pesquisa.</p>';
+ statusEl.textContent=term?metas+" metas encontradas em "+visible+" registros de normas nos blocos.":"Distribuição sem duplicação: "+selected+" metas pendentes no Sprint TJRS e "+other+" nas demais pendências TJSC ("+source.metas_prioritarias_pendentes+" no total).";
 }
 document.getElementById("expand").addEventListener("click",()=>{document.querySelectorAll("details.group").forEach(e=>e.open=true)});
 document.getElementById("collapse").addEventListener("click",()=>{document.querySelectorAll("details.group").forEach(e=>e.open=false)});
 searchEl.addEventListener("input",render);
-fetch("./dados.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(data=>{
- if(!Array.isArray(data.grupos)||typeof data.metas_prioritarias_pendentes!=="number")throw new Error("Estrutura de dados inválida");
- source=data;document.getElementById("total-metas").textContent=data.metas_prioritarias_pendentes.toLocaleString("pt-BR");
+Promise.all([
+ fetch("./dados.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Falha ao carregar pendências: HTTP "+r.status);return r.json()}),
+ fetch("./sprint-tjrs.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Falha ao carregar Sprint TJRS: HTTP "+r.status);return r.json()})
+]).then(([data,sprint])=>{
+ if(!Array.isArray(data.grupos)||typeof data.metas_prioritarias_pendentes!=="number")throw new Error("Estrutura de pendências inválida");
+ if(!Array.isArray(sprint.blocos)||sprint.blocos.length!==2||sprint.blocos[0].id!=="A"||sprint.blocos[1].id!=="B")throw new Error("Estrutura de seleção TJRS inválida");
+ source=data;selection=sprint;
+ const audit=buildGroups();
+ document.getElementById("total-metas").textContent=data.metas_prioritarias_pendentes.toLocaleString("pt-BR");
  document.getElementById("total-normas").textContent=data.normas_pendentes.toLocaleString("pt-BR");
  document.getElementById("total-grupos").textContent=data.grupos.length.toLocaleString("pt-BR");
- const parts=data.atualizado_apos_fechamento.split("-");
- document.getElementById("source-date").innerHTML="<strong>Último fechamento sincronizado: "+escapeHtml(parts.reverse().join("/"))+"</strong> · "+data.metas_extras_fora_indice+" metas extras facultativas fora deste painel.";
+ const date=data.atualizado_apos_fechamento.split("-").reverse().join("/");
+ document.getElementById("source-date").innerHTML="<strong>Último fechamento sincronizado: "+escapeHtml(date)+"</strong> · "+data.metas_extras_fora_indice+" metas extras facultativas fora deste painel.";
  render();
-}).catch(()=>{statusEl.textContent="Não foi possível carregar a relação.";groupsEl.innerHTML='<p class="error">Tente recarregar a página. Se o problema persistir, consulte o arquivo de dados pelo link abaixo.</p>';});
+}).catch(err=>{
+ statusEl.textContent="Não foi possível carregar ou conciliar os dados: "+err.message;
+ groupsEl.innerHTML='<p class="error">Confira os arquivos de pendências e de seleção do Sprint TJRS no GitHub.</p>';
+});
 </script></body></html>

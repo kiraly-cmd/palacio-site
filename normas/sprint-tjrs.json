@@ -1,0 +1,147 @@
+{
+  "tipo": "selecao_sprint_tjrs_2026",
+  "status": "selecao_parcial_em_definicao",
+  "data_decisao": "2026-11-21",
+  "prazo_estudo_dias": 17,
+  "capacidade_planejada_metas": 68,
+  "metas_selecionadas_iniciais": 43,
+  "vagas_nao_preenchidas": 25,
+  "nota": "Seleção de composição de blocos aprovada pelo usuário para exibição na página provisória. Não altera a meta diária nem os registros oficiais de execução. Código Civil permanece na fila global, fora do sprint. Metas selecionadas só são baixadas no fechamento oficial; bloco C contém todas as outras metas pendentes prioritárias TJSC.",
+  "blocos": [
+    {
+      "id": "A",
+      "titulo": "Bloco A - Códigos",
+      "normas": [
+        {
+          "nome": "Constituição Federal",
+          "metas": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
+          "nome": "Código de Processo Civil",
+          "metas": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "nome": "Código Penal",
+          "metas": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Código de Processo Penal",
+          "metas": [
+            "1",
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "titulo": "Bloco B - Legislação especial",
+      "normas": [
+        {
+          "nome": "Lei 11.101/2005 — recuperação judicial e falências",
+          "metas": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
+          "nome": "Lei 8.429/1992 — improbidade administrativa",
+          "metas": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Código Tributário Nacional",
+          "metas": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ]
+        },
+        {
+          "nome": "Lei 14.344/2022 — Henry Borel",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 4.591/1964 — condomínios e incorporações",
+          "metas": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "nome": "Lei 9.514/1997 — financiamento imobiliário",
+          "metas": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "nome": "Lei 9.492/1997 — protesto",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 5.474/1968 — duplicatas",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 7.357/1985 — cheque",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 12.965/2014 — Marco Civil da Internet",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Lei 9.307/1996 — arbitragem",
+          "metas": [
+            "1"
+          ]
+        },
+        {
+          "nome": "Res. CONAMA 237/1997 — licenciamento",
+          "metas": [
+            "1"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,98 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#203746"><title>Palácio Criminal | Em preparação</title>
-<style>:root{color-scheme:light}*{box-sizing:border-box}body{background:#f3f5f4;color:#203746;margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column}header{background:#fdfdfb;border-bottom:1px solid #dfe5e4;padding:19px max(25px,calc((100vw - 1080px)/2))}a{color:#246b72;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}a:focus-visible{outline:3px solid #246b72;outline-offset:4px}main{width:min(740px,calc(100% - 48px));margin:auto;text-align:center;padding:60px 0 100px}.emblem{display:grid;place-items:center;border:1px solid #ded2be;background:#faf7f0;border-radius:22px;width:100px;height:100px;margin:0 auto 25px;font:54px Georgia,serif;color:#917449}.status{letter-spacing:.15em;text-transform:uppercase;font-size:12px;font-weight:800;color:#896e4b}h1{font:clamp(38px,6vw,58px)/1.13 Georgia,serif;margin:18px 0}p{color:#60727c;max-width:550px;margin:0 auto 32px}.button{display:inline-block;border:1px solid #b4c8c8;border-radius:11px;padding:13px 20px;background:#fff}footer{text-align:center;font-size:12px;color:#839095;padding:20px}</style>
-</head><body><header><a href="../" aria-label="Voltar à página inicial">← Voltar aos Palácios</a></header>
-<main><div class="emblem" aria-hidden="true">⚖</div><div class="status">Módulo em preparação</div><h1>Palácio Criminal</h1><p>Este Palácio ainda não foi desenvolvido. Quando sua estrutura jurídica estiver definida, aparecerá aqui em um fluxograma com âncoras e expansões laterais, como o Palácio Cível.</p><a href="../" class="button">Voltar à escolha de Palácios</a></main><footer>Palácios da Memória · Magistratura</footer></body></html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#203746">
+<meta name="description" content="Pílulas de revisão para sentença criminal: estrutura geral e crimes em espécie.">
+<title>Sentença Criminal | Palácios da Memória</title>
+<style>
+:root{color-scheme:light;--ink:#203746;--muted:#60727c;--teal:#246b72;--gold:#a17e4a;--line:#d4dcd9;--paper:#f3f5f4}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);margin:0;font:15px/1.62 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;min-height:100vh}
+header{background:#fdfdfb;border-bottom:1px solid #dfe5e4;padding:18px max(22px,calc((100vw - 1120px)/2))}
+a{color:#246b72;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #7ba6ac;outline-offset:3px}
+main{max-width:1120px;margin:auto;padding:35px 22px 75px}
+.kicker{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800;color:#896e4b}
+h1{font:clamp(34px,5vw,52px)/1.13 Georgia,serif;margin:9px 0 12px}
+.intro{max-width:880px;color:var(--muted);margin:0 0 25px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #dfe5e4;background:#fdfdfb;border-radius:12px 12px 0 0}
+.tab{border:1px solid #d6e3e0;border-bottom:3px solid #d6e3e0;padding:14px 12px;background:white;font:700 14px/1.3 inherit;color:#49636b;cursor:pointer;border-radius:10px 10px 0 0}
+.tab+ .tab{border-left:2px solid #9bb9c9}
+.tab:hover{background:#f0f7fb}
+.tab[aria-selected=true]{background:#dcecf6;color:#194c70;border-bottom-color:#397fa6}
+.panel{background:#fff;border:1px solid #dfe5e4;border-top:0;border-radius:0 0 16px 16px;padding:25px 24px 28px}
+.panel[hidden]{display:none}
+.panel h2{font:normal 26px/1.25 Georgia,serif;margin:2px 0 8px}
+.description{color:var(--muted);font-size:13px;margin:0 0 20px}
+.topic{background:#fbfcfb;border:1px solid #d6e2df;border-radius:13px;margin:12px 0;overflow:hidden}
+.topic>summary{cursor:pointer;padding:16px 18px;font-weight:750;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.topic>summary::-webkit-details-marker{display:none}
+.topic>summary::after{content:"+";font-size:23px;color:#69817e;line-height:1}
+.topic[open]>summary::after{content:"−"}
+.topic[open]>summary{border-bottom:1px solid #e0e9e7;background:#f2f8f5}
+.topic-body{padding:5px 16px 15px}
+.pill{background:#fff;border:1px solid #e0e7e5;border-radius:10px;padding:15px 16px;margin:12px 0}
+.pill h3{font-size:15px;margin:0 0 9px;line-height:1.45}
+.pill p{font-size:13px;margin:5px 0}
+.pill .trigger{color:#526d73}
+.pill .alert{color:#77542e}
+.pill .source{font-size:12px;color:#627b7a}
+.pill .id{display:inline-block;font-size:10px;background:#edf4f1;border:1px solid #d5e5df;border-radius:5px;padding:2px 6px;margin-right:8px;color:#315e5f;vertical-align:2px}
+.note{font-size:12px;color:#687e82;background:#f8faf9;border:1px solid #e2e8e5;border-radius:9px;padding:12px 14px;margin-top:24px}
+footer{text-align:center;color:#829095;font-size:12px;padding:18px 20px}
+@media(max-width:600px){main{padding:26px 14px 45px}.panel{padding:18px 13px}.tab{font-size:12px;padding:12px 7px}.topic>summary{padding:13px}.topic-body{padding:4px 10px 12px}}
+</style>
+</head>
+<body>
+<header><a href="../" aria-label="Voltar à página inicial">← Voltar aos Palácios</a></header>
+<main>
+<div class="kicker">Palácio Criminal · Acervo preliminar</div>
+<h1>Sentença Criminal</h1>
+<p class="intro">Pílulas de revisão organizadas provisoriamente por tema. A estrutura definitiva do Palácio Criminal, com etapas e fluxograma, ainda será construída. Este acervo não constitui espelho oficial nem substitui a conferência da legislação e jurisprudência aplicáveis à data da prova.</p>
+<div class="tabs" role="tablist" aria-label="Visões da Sentença Criminal">
+<button class="tab" role="tab" id="tab-geral" aria-controls="panel-geral" aria-selected="true" tabindex="0">Estrutura Geral</button>
+<button class="tab" role="tab" id="tab-especie" aria-controls="panel-especie" aria-selected="false" tabindex="-1">Crimes em Espécie</button>
+</div>
+<section class="panel" id="panel-geral" role="tabpanel" aria-labelledby="tab-geral">
+<h2>Estrutura Geral</h2>
+<p class="description">Alertas aplicáveis transversalmente à sentença penal, agrupados temporariamente em “Estrutura da Sentença”.</p>
+<details class="topic" open><summary>Estrutura da Sentença <small>4 pílulas</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-02</span>Substituição da pena: combinar arts. 44 e 46 do CP</h3><p class="trigger"><strong>Gatilho:</strong> escolha da espécie de pena restritiva de direitos.</p><p>Depois de verificar o cabimento da substituição (art. 44), confira se a modalidade escolhida é legalmente compatível com a condenação. A prestação de serviços à comunidade somente é aplicável às condenações <strong>superiores a seis meses</strong> (art. 46 do CP).</p><p class="alert"><strong>Armadilha:</strong> substituir pena de um mês por prestação de serviços à comunidade.</p></article>
+<article class="pill"><h3><span class="id">PEN-04</span>Dosimetria: evitar bis in idem</h3><p class="trigger"><strong>Gatilho:</strong> uma circunstância aparece em mais de uma fase da pena.</p><p>Controle onde cada dado foi valorado. No tráfico, natureza e quantidade exigem exame articulado com o art. 42 e, quando cabível o privilégio, com o art. 33, § 4º, da Lei 11.343/2006, observados os Temas 1.154 e 1.241/STJ e sua vigência temporal.</p><p class="alert"><strong>Armadilha:</strong> aumentar a pena-base e reduzir a fração do privilégio com a mesma circunstância, sem fundamento autônomo.</p></article>
+<article class="pill"><h3><span class="id">PEN-06</span>Contravenção anterior: antecedentes ≠ reincidência</h3><p class="trigger"><strong>Gatilho:</strong> certidão registra condenação definitiva anterior por contravenção.</p><p>Condenação por contravenção não gera reincidência pela prática posterior de crime (art. 63 do CP), mas pode configurar maus antecedentes (art. 59 do CP), com repercussão, por exemplo, no requisito de bons antecedentes do tráfico privilegiado.</p><p class="alert"><strong>Armadilha:</strong> utilizar a condenação contravencional como agravante de reincidência ou ignorar seus possíveis efeitos na pena-base.</p></article>
+<article class="pill"><h3><span class="id">PEN-13</span>Confissão e mínimo legal</h3><p class="trigger"><strong>Gatilho:</strong> confissão do acusado ou admissão de fatos relevantes.</p><p>Examinar a atenuante da confissão na segunda fase (art. 65, III, d, CP), à luz do Tema 1.194/STJ e do entendimento aplicável à época. Conferir a limitação da pena aquém do mínimo legal pela atenuante (Súmula 231/STJ), sem confundi-la com minorantes da terceira fase.</p><p class="alert"><strong>Armadilha:</strong> esquecer a atenuante ou reduzir a pena intermediária abaixo do mínimo legal sem enfrentar o entendimento consolidado.</p></article>
+</div></details>
+</section>
+<section class="panel" id="panel-especie" role="tabpanel" aria-labelledby="tab-especie" hidden>
+<h2>Crimes em Espécie</h2>
+<p class="description">Uma caixa por tema penal. As pílulas relacionadas a cada crime ficam reunidas em seu interior.</p>
+<details class="topic" open><summary>Tráfico de Drogas <small>2 pílulas</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-01</span>Interestadualidade: conferir a Súmula 587/STJ</h3><p class="trigger"><strong>Gatilho:</strong> identificação da origem, destino ou rota da droga.</p><p>Verifique a majorante do art. 40, V, da Lei 11.343/2006. A efetiva transposição da divisa estadual não é exigida, mas deve haver demonstração inequívoca da intenção de tráfico interestadual (Súmula 587/STJ).</p><p class="alert"><strong>Armadilha:</strong> afastar a majorante apenas porque a apreensão precedeu a fronteira.</p></article>
+<article class="pill"><h3><span class="id">PEN-03</span>Tráfico privilegiado: fundamentar incidência e fração</h3><p class="trigger"><strong>Gatilho:</strong> art. 33, § 4º, da Lei 11.343/2006.</p><p>Conferir primariedade, bons antecedentes, ausência de dedicação criminosa e de integração em organização criminosa. Fundamentar a fração escolhida, sem presumir 2/3. Avaliar quantidade excepcional e os Temas 1.154 e 1.241/STJ segundo sua aplicação temporal, evitando dupla valoração.</p><p class="alert"><strong>Armadilha:</strong> conceder a redução máxima automaticamente ou negar o privilégio sem fundamentação concreta.</p></article>
+</div></details>
+<details class="topic"><summary>Desobediência <small>1 pílula</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-07</span>Fuga não se confunde com ordem descumprida</h3><p class="trigger"><strong>Gatilho:</strong> fuga de abordagem policial.</p><p>Identifique ordem legal concreta, sua comunicação e o descumprimento voluntário. A recusa de ordem de parada em policiamento ostensivo pode caracterizar desobediência (Tema 1.060/STJ), mas a fuga sorrateira sem ordem demonstrada exige análise distinta (art. 330 do CP).</p><p class="alert"><strong>Armadilha:</strong> presumir desobediência a partir de qualquer fuga.</p></article>
+</div></details>
+<details class="topic"><summary>Uso de Documento Falso <small>1 pílula</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-08</span>Não exigir prejuízo efetivo</h3><p class="trigger"><strong>Gatilho:</strong> apresentação consciente de documento falsificado.</p><p>O delito do art. 304 do CP é formal: verificar falsidade, aptidão enganosa, uso consciente e natureza do documento para definir a pena. A consumação não exige prejuízo concreto nem sucesso da fraude.</p><p class="alert"><strong>Armadilha:</strong> absolver apenas porque a falsificação foi descoberta ou não causou prejuízo.</p></article>
+</div></details>
+<details class="topic"><summary>Favorecimento Pessoal <small>1 pílula</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-09</span>Conferir o rol de parentes da isenção</h3><p class="trigger"><strong>Gatilho:</strong> ocultação de criminoso por familiar.</p><p>A isenção do art. 348, § 2º, do CP abrange ascendente, descendente, cônjuge e irmão, não o primo. Verifique o dolo e a finalidade de subtrair o autor à ação da autoridade.</p><p class="alert"><strong>Armadilha:</strong> estender a isenção legal indistintamente a parentes próximos.</p></article>
+</div></details>
+<details class="topic"><summary>Tráfico de Drogas — Bens e Perdimento <small>1 pílula</small></summary><div class="topic-body">
+<article class="pill"><h3><span class="id">PEN-10</span>Instrumento de trabalho não impede automaticamente o perdimento</h3><p class="trigger"><strong>Gatilho:</strong> apreensão de veículo utilizado no tráfico e pedido de restituição.</p><p>Examine o nexo do bem com o tráfico, os direitos de terceiros de boa-fé e os pressupostos do perdimento. O Tema 647/STF dispensa prova de habitualidade, reiteração ou adaptação especial do veículo. Decida expressamente a restituição e a destinação legal.</p><p class="alert"><strong>Armadilha:</strong> restituir automaticamente o veículo por ser instrumento de trabalho ou ignorar o pedido defensivo.</p></article>
+</div></details>
+</section>
+<p class="note"><strong>Governança:</strong> lote inicial de dez pílulas expressamente aprovado. Organização provisória; nenhuma estrutura definitiva de sentença criminal foi criada. Verificar legislação e precedentes na data de cada prova. Não se publicam manuscritos, notas ou informações pessoais.</p>
+</main>
+<footer>Palácios da Memória · Magistratura</footer>
+<script>
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+const panels=[...document.querySelectorAll('[role="tabpanel"]')];
+function activate(tab,focus=false){tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1});panels.forEach(p=>{p.hidden=p.id!==tab.getAttribute('aria-controls')});if(focus)tab.focus()}
+tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',e=>{let j=i;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;else return;e.preventDefault();activate(tabs[j],true)})});
+</script>
+</body>
+</html>

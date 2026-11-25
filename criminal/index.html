@@ -37,6 +37,7 @@
 .spin-symbol{font-size:14px;color:#7e9aa0;line-height:1.2}.spin-item.active .spin-symbol{color:#2c7777}
 .spin-number{display:inline-block;color:#276f73;background:#e7f3f0;padding:2px 6px;border-radius:4px;font:700 10px/1.25 system-ui,sans-serif;white-space:nowrap;margin-bottom:4px}.spin-item strong{display:block;font-size:12px;font-weight:680;line-height:1.35}.spin-item small{display:block;color:#78898c;font-size:10px;margin-top:5px;line-height:1.35}
 .detail-panel{width:var(--c3);flex-shrink:0;background:#fff;border:1px solid #cfdddc;border-radius:15px;box-shadow:var(--shadow);padding:21px 23px 23px;position:relative}
+.branch-connections{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:3}.branch-connections path{fill:none;stroke:#83aca8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.branch-connections circle{fill:#488b85;stroke:white;stroke-width:1.5}.branch-area.linked .detail-panel:before,.branch-area.linked .detail-panel:after{display:none}
 .detail-panel:before{position:absolute;content:'';height:2px;width:var(--gap);left:calc(-1 * var(--gap));top:31px;background:#aac5c1}.detail-panel:after{position:absolute;content:'';left:-5px;top:29px;width:6px;height:6px;background:#488b85;border-radius:50%}
 .detail-eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8b785e;font-size:10px;font-weight:750}.detail-panel h2{font:normal 22px/1.2 Georgia,serif;margin:9px 30px 7px 0;letter-spacing:-.013em}
 .detail-norm{font-size:11px;line-height:1.5;color:#557b7c;border-left:3px solid #8eb9b3;padding:5px 10px;background:#f1f7f6;margin:10px 0 16px}
@@ -84,10 +85,25 @@ function render(){
   const selected=shown.find(p=>p.id===activePill);
   const list=isOpen?'<div class="branch-list"><div class="branch-heading"><strong>Desdobramentos</strong><small>'+shown.length+' pílulas</small></div>'+shown.map((p,j)=>'<button type="button" class="spin-item '+(selected?.id===p.id?'active':'')+'" aria-pressed="'+(selected?.id===p.id)+'" onclick="selectPill(\''+esc(p.id)+'\')"><span class="spin-symbol">◇</span><span><span class="spin-number">'+esc(p.id)+'</span><strong>'+esc(p.title)+'</strong><small>Ver fundamento e armadilha</small></span></button>').join('')+'</div>':'';
   const detail=selected?'<aside class="detail-panel"><button type="button" class="detail-close" aria-label="Fechar detalhe" onclick="selectPill(\''+esc(selected.id)+'\')">×</button><div class="detail-eyebrow">Pílula · '+esc(g.category)+'</div><h2>'+esc(selected.title)+'</h2><div class="detail-norm">'+esc(selected.id)+' · Teste JusTutor 01</div><h3>Quando lembrar</h3><p>'+esc(selected.trigger)+'</p><h3>Regra e aplicação</h3><p>'+selected.content+'</p><div class="warning"><strong>Armadilha a evitar:</strong> '+esc(selected.alert)+'</div></aside>':'';
-  return '<div class="flow-row" id="row-'+esc(g.id)+'"><button type="button" class="anchor-box '+(isOpen?'active':'')+'" aria-expanded="'+isOpen+'" aria-controls="branch-'+esc(g.id)+'" onclick="toggleAnchor(\''+esc(g.id)+'\')"><span class="anchor-head"><span class="anchor-no">'+(view==='general'?'G':String(i+1).padStart(2,'0'))+'</span><span class="anchor-info"><span class="anchor-name">'+esc(g.category)+'</span><span class="anchor-caption">'+esc(g.subtitle)+'</span></span><span class="anchor-toggle" aria-hidden="true">'+(isOpen?'−':'+')+'</span></span><span class="anchor-concept">'+esc(g.concept)+'</span></button><div class="branch-area '+(isOpen?'':'empty')+'" id="branch-'+esc(g.id)+'">'+list+detail+'</div></div>'
+  return '<div class="flow-row" id="row-'+esc(g.id)+'"><button type="button" class="anchor-box '+(isOpen?'active':'')+'" aria-expanded="'+isOpen+'" aria-controls="branch-'+esc(g.id)+'" onclick="toggleAnchor(\''+esc(g.id)+'\')"><span class="anchor-head"><span class="anchor-no">'+(view==='general'?'G':String(i+1).padStart(2,'0'))+'</span><span class="anchor-info"><span class="anchor-name">'+esc(g.category)+'</span><span class="anchor-caption">'+esc(g.subtitle)+'</span></span><span class="anchor-toggle" aria-hidden="true">'+(isOpen?'−':'+')+'</span></span><span class="anchor-concept">'+esc(g.concept)+'</span></button><div class="branch-area '+(isOpen?'linked':'empty')+'" id="branch-'+esc(g.id)+'">'+list+detail+(selected?'<svg class="branch-connections" aria-hidden="true"></svg>':'')+'</div></div>'
  }).join('');
  if(!flow.innerHTML.trim())flow.innerHTML='<p>Nenhuma pílula encontrada para essa busca.</p>';
+ requestAnimationFrame(drawConnectors);
 }
+function drawConnectors(){
+ flow.querySelectorAll('.branch-area.linked').forEach(area=>{
+  const pill=area.querySelector('.spin-item.active'),detail=area.querySelector('.detail-panel'),svg=area.querySelector('.branch-connections');
+  if(!pill||!detail||!svg)return;
+  const list=area.querySelector('.branch-list');
+  const pr=pill.getBoundingClientRect(),lr=list.getBoundingClientRect();
+  detail.style.marginTop=Math.max(0,Math.round(pr.top+pr.height/2-lr.top-31))+'px';
+  const ar=area.getBoundingClientRect(),a=pill.getBoundingClientRect(),b=detail.getBoundingClientRect();
+  const x1=a.right-ar.left,y1=a.top+a.height/2-ar.top,x2=b.left-ar.left,y2=b.top+31-ar.top;
+  const mid=(x1+x2)/2;
+  svg.innerHTML='<path d="M '+x1+' '+y1+' H '+mid+' V '+y2+' H '+x2+'"></path><circle cx="'+x1+'" cy="'+y1+'" r="3.5"></circle><circle cx="'+x2+'" cy="'+y2+'" r="3.5"></circle>';
+ });
+}
+window.addEventListener('resize',()=>requestAnimationFrame(drawConnectors));
 function setView(next){view=next;const first=visible()[0];activeAnchor=first.id;activePill=first.pills[0].id;render()}
 document.querySelector('#tab-general').addEventListener('click',()=>setView('general'));
 document.querySelector('#tab-topics').addEventListener('click',()=>setView('topics'));

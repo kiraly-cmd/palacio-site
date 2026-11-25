@@ -1,97 +1,99 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#203746">
-<meta name="description" content="Pílulas de revisão para sentença criminal: estrutura geral e crimes em espécie.">
-<title>Sentença Criminal | Palácios da Memória</title>
+<meta name="description" content="Palácio Criminal: pílulas jurídicas em fluxograma, com caixas interligadas, estrutura geral e crimes em espécie.">
+<title>Sentença Criminal — Palácios da Memória</title>
 <style>
-:root{color-scheme:light;--ink:#203746;--muted:#60727c;--teal:#246b72;--gold:#a17e4a;--line:#d4dcd9;--paper:#f3f5f4}
-*{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);margin:0;font:15px/1.62 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;min-height:100vh}
-header{background:#fdfdfb;border-bottom:1px solid #dfe5e4;padding:18px max(22px,calc((100vw - 1120px)/2))}
-a{color:#246b72;text-decoration:none;font-weight:700}a:hover{text-decoration:underline}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #7ba6ac;outline-offset:3px}
-main{max-width:1120px;margin:auto;padding:35px 22px 75px}
-.kicker{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800;color:#896e4b}
-h1{font:clamp(34px,5vw,52px)/1.13 Georgia,serif;margin:9px 0 12px}
-.intro{max-width:880px;color:var(--muted);margin:0 0 25px}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #dfe5e4;background:#fdfdfb;border-radius:12px 12px 0 0}
-.tab{border:1px solid #d6e3e0;border-bottom:3px solid #d6e3e0;padding:14px 12px;background:white;font:700 14px/1.3 inherit;color:#49636b;cursor:pointer;border-radius:10px 10px 0 0}
-.tab+ .tab{border-left:2px solid #9bb9c9}
-.tab:hover{background:#f0f7fb}
-.tab[aria-selected=true]{background:#dcecf6;color:#194c70;border-bottom-color:#397fa6}
-.panel{background:#fff;border:1px solid #dfe5e4;border-top:0;border-radius:0 0 16px 16px;padding:25px 24px 28px}
-.panel[hidden]{display:none}
-.panel h2{font:normal 26px/1.25 Georgia,serif;margin:2px 0 8px}
-.description{color:var(--muted);font-size:13px;margin:0 0 20px}
-.topic{background:#fbfcfb;border:1px solid #d6e2df;border-radius:13px;margin:12px 0;overflow:hidden}
-.topic>summary{cursor:pointer;padding:16px 18px;font-weight:750;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.topic>summary::-webkit-details-marker{display:none}
-.topic>summary::after{content:"+";font-size:23px;color:#69817e;line-height:1}
-.topic[open]>summary::after{content:"−"}
-.topic[open]>summary{border-bottom:1px solid #e0e9e7;background:#f2f8f5}
-.topic-body{padding:5px 16px 15px}
-.pill{background:#fff;border:1px solid #e0e7e5;border-radius:10px;padding:15px 16px;margin:12px 0}
-.pill h3{font-size:15px;margin:0 0 9px;line-height:1.45}
-.pill p{font-size:13px;margin:5px 0}
-.pill .trigger{color:#526d73}
-.pill .alert{color:#77542e}
-.pill .source{font-size:12px;color:#627b7a}
-.pill .id{display:inline-block;font-size:10px;background:#edf4f1;border:1px solid #d5e5df;border-radius:5px;padding:2px 6px;margin-right:8px;color:#315e5f;vertical-align:2px}
-.note{font-size:12px;color:#687e82;background:#f8faf9;border:1px solid #e2e8e5;border-radius:9px;padding:12px 14px;margin-top:24px}
-footer{text-align:center;color:#829095;font-size:12px;padding:18px 20px}
-@media(max-width:600px){main{padding:26px 14px 45px}.panel{padding:18px 13px}.tab{font-size:12px;padding:12px 7px}.topic>summary{padding:13px}.topic-body{padding:4px 10px 12px}}
+:root{color-scheme:light;--ink:#1c2c36;--ink-soft:#6c7982;--navy:#203746;--line:#b9c3c8;--light:#f8f9f8;--paper:#f3f5f4;--teal:#246b72;--gold:#ae8a5c;--shadow:0 13px 35px rgba(22,42,52,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.48 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #7ba6ac;outline-offset:3px}
+.portal-return{background:#203746;padding:10px clamp(20px,3.5vw,62px)}.portal-return a{color:#f4f7f7;text-decoration:none;font-size:12px;font-weight:750}.portal-return a:hover{text-decoration:underline}
+.hero{background:#fdfdfb;border-bottom:1px solid #dfe5e4;padding:18px clamp(20px,3.5vw,62px) 15px;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px}.emblem{width:42px;height:42px;border:1px solid #a7b3b9;border-radius:12px;display:grid;place-items:center;font:28px Georgia,serif;color:#8d714b}.kicker{text-transform:uppercase;letter-spacing:.18em;color:#857b6f;font-size:10px;font-weight:700}
+.brand h1{font:normal 27px/1.13 Georgia,"Times New Roman",serif;margin:2px 0 1px;letter-spacing:-.025em}.brand p{margin:0;color:var(--ink-soft);font-size:11px}
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.action{border:1px solid #d3dbdb;border-radius:9px;background:#fff;color:#365465;padding:9px 12px;font-size:12px;font-weight:650}.action:hover{background:#f1f7f7;border-color:#9fbfc0}
+.controls input{border:1px solid #d3dbdb;border-radius:9px;background:#fff;padding:9px 12px;min-width:170px;max-width:205px;font-size:12px}
+.chip{border:1px solid #d3dbdb;padding:8px 10px;border-radius:8px;font-size:12px;font-weight:700;background:white;color:#415865}
+.intro{padding:18px clamp(20px,3.5vw,62px) 12px;display:flex;justify-content:space-between;gap:15px;align-items:start;flex-wrap:wrap}.intro p{max-width:880px;margin:0;color:#60717c;font-size:13px;line-height:1.6}.stats{font-size:11px;white-space:nowrap;color:#7b868b;border:1px solid #dde3e3;background:#fff;border-radius:25px;padding:7px 12px}
+.view-tabs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:0;padding:10px clamp(20px,3.5vw,62px) 0;background:#fdfdfb;border-bottom:1px solid #dfe5e4}
+.view-tab{appearance:none;min-width:0;border:1px solid #d6e3e0;border-bottom:3px solid #d6e3e0;border-radius:10px 10px 0 0;background:#fff;padding:12px 18px;cursor:pointer;color:#49636b;font-size:13px;font-weight:700;text-align:center}
+.view-tab+.view-tab{border-left:2px solid #9bb9c9}.view-tab:hover{background:#f0f7fb;border-color:#97bab3}.view-tab[aria-selected="true"]{background:#dcecf6;color:#194c70;border-bottom-color:#397fa6}
+.viewport{overflow-x:auto;overflow-y:visible;padding:8px clamp(20px,3.5vw,62px) 48px;scrollbar-color:#aebec2 #e9eeee}
+.flow{position:relative;--c1:335px;--gap:34px;--c2:292px;--c3:435px;width:max-content;min-width:calc(var(--c1) + var(--gap) + var(--c2) + var(--gap) + var(--c3));padding:7px 5px 40px}
+.flow:before{position:absolute;content:'';left:calc(var(--c1)/2 + 5px);top:12px;bottom:60px;width:3px;background:linear-gradient(#bac6ca,#9fafb8 50%,#bac6ca);border-radius:3px;z-index:0;pointer-events:none}
+.flow-row{position:relative;display:grid;grid-template-columns:var(--c1) calc(var(--c2) + var(--gap) + var(--c3));column-gap:var(--gap);align-items:start;min-height:83px;margin-bottom:28px;isolation:isolate}
+.anchor-box{background:#fff;border:1px solid #d9e0e1;min-height:81px;border-radius:14px;box-shadow:0 4px 12px #152f3d08;padding:14px 18px;display:flex;flex-direction:column;align-items:stretch;gap:9px;width:100%;text-align:left;color:var(--ink);position:relative;z-index:1;transition:background .15s,border-color .15s,box-shadow .15s}
+.anchor-box:hover{border-color:#92b1b6;box-shadow:0 5px 20px #163d4c16}.anchor-box.active{border-color:#397d84;background:#f4faf9;box-shadow:0 0 0 3px #deeceb,var(--shadow)}
+.anchor-head{display:flex;align-items:center;gap:13px;min-width:0;width:100%}.anchor-no{background:#eef1ef;border:1px solid #d7e0df;color:#6d675a;border-radius:9px;min-width:41px;height:41px;display:grid;place-items:center;font-size:11px;font-weight:750;flex-shrink:0}
+.anchor-box.active .anchor-no{background:#dcece9;border-color:#a9ceca;color:#1e686b}.anchor-info{min-width:0;flex:1}.anchor-name{display:block;font:normal 19px/1.25 Georgia,"Times New Roman",serif;letter-spacing:-.012em}.anchor-caption{display:block;font-size:10.5px;line-height:1.4;color:#859097;margin-top:4px}
+.anchor-toggle{font-size:23px;color:#68858b;padding-left:5px;font-weight:300;line-height:1}.anchor-concept{display:block;width:100%;font-size:11.5px;line-height:1.5;color:#566971;margin-top:1px;padding-top:9px;border-top:1px solid #e0eae7}
+.branch-area{display:flex;gap:var(--gap);align-items:flex-start;position:relative;min-height:0}.branch-area.empty{display:none}.branch-area:before{content:'';height:2px;width:var(--gap);position:absolute;top:41px;left:calc(-1 * var(--gap));background:#a8bdbf}
+.branch-area:after{content:'';width:6px;height:6px;position:absolute;top:39px;left:-5px;background:#5c8a8c;border-radius:50%}
+.branch-list{width:var(--c2);flex-shrink:0;background:white;border:1px solid #d5e0e0;border-radius:15px;box-shadow:var(--shadow);padding:13px}
+.branch-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:2px 3px 11px;border-bottom:1px solid #e7eceb;margin-bottom:9px}.branch-heading strong{font:normal 17px Georgia,serif}.branch-heading small{font-size:11px;color:#7c898e}
+.spin-item{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid #dce8e5;border-radius:10px;padding:11px 9px;margin:8px 0;width:100%;text-align:left;color:var(--ink)}
+.spin-item:hover{background:#f5f8f7;border-color:#bccfcb}.spin-item.active{background:#eaf4f2;border-color:#7caaa7;box-shadow:0 0 0 2px #e3f1ed}
+.spin-symbol{font-size:14px;color:#7e9aa0;line-height:1.2}.spin-item.active .spin-symbol{color:#2c7777}
+.spin-number{display:inline-block;color:#276f73;background:#e7f3f0;padding:2px 6px;border-radius:4px;font:700 10px/1.25 system-ui,sans-serif;white-space:nowrap;margin-bottom:4px}.spin-item strong{display:block;font-size:12px;font-weight:680;line-height:1.35}.spin-item small{display:block;color:#78898c;font-size:10px;margin-top:5px;line-height:1.35}
+.detail-panel{width:var(--c3);flex-shrink:0;background:#fff;border:1px solid #cfdddc;border-radius:15px;box-shadow:var(--shadow);padding:21px 23px 23px;position:relative}
+.detail-panel:before{position:absolute;content:'';height:2px;width:var(--gap);left:calc(-1 * var(--gap));top:31px;background:#aac5c1}.detail-panel:after{position:absolute;content:'';left:-5px;top:29px;width:6px;height:6px;background:#488b85;border-radius:50%}
+.detail-eyebrow{text-transform:uppercase;letter-spacing:.16em;color:#8b785e;font-size:10px;font-weight:750}.detail-panel h2{font:normal 22px/1.2 Georgia,serif;margin:9px 30px 7px 0;letter-spacing:-.013em}
+.detail-norm{font-size:11px;line-height:1.5;color:#557b7c;border-left:3px solid #8eb9b3;padding:5px 10px;background:#f1f7f6;margin:10px 0 16px}
+.detail-panel h3{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#78878b;margin:16px 0 8px}
+.detail-panel p{font-size:12px;line-height:1.6;color:#344a57}.detail-panel .warning{background:#f7f4ed;border:1px solid #e9dfcd;color:#675745;padding:12px 13px;border-radius:9px;font-size:11px;line-height:1.55;margin-top:17px}
+.detail-close{position:absolute;top:11px;right:12px;border:0;background:#f0f5f4;color:#547273;border-radius:7px;width:29px;height:29px;font-size:19px}
+.footer{border-top:1px solid #dce3e3;background:#fdfdfb;padding:17px 30px;text-align:center;color:#8a9698;font-size:11px}
+@media(max-width:850px){.hero{padding:13px 18px}.brand h1{font-size:23px}.intro{padding:14px 18px}.viewport{padding-left:18px;padding-right:18px}.controls input{min-width:120px;max-width:155px}.hero .controls{width:100%}.flow{--c1:305px;--c2:276px;--c3:365px;--gap:24px}.flow-row{margin-bottom:22px}.anchor-name{font-size:17px}.detail-panel h2{font-size:20px}.branch-area:before,.detail-panel:before{width:var(--gap)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header><a href="../" aria-label="Voltar à página inicial">← Voltar aos Palácios</a></header>
-<main>
-<div class="kicker">Palácio Criminal · Acervo preliminar</div>
-<h1>Sentença Criminal</h1>
-<p class="intro">Pílulas de revisão organizadas provisoriamente por tema. A estrutura definitiva do Palácio Criminal, com etapas e fluxograma, ainda será construída. Este acervo não constitui espelho oficial nem substitui a conferência da legislação e jurisprudência aplicáveis à data da prova.</p>
-<div class="tabs" role="tablist" aria-label="Visões da Sentença Criminal">
-<button class="tab" role="tab" id="tab-geral" aria-controls="panel-geral" aria-selected="true" tabindex="0">Estrutura Geral</button>
-<button class="tab" role="tab" id="tab-especie" aria-controls="panel-especie" aria-selected="false" tabindex="-1">Crimes em Espécie</button>
-</div>
-<section class="panel" id="panel-geral" role="tabpanel" aria-labelledby="tab-geral">
-<h2>Estrutura Geral</h2>
-<p class="description">Alertas aplicáveis transversalmente à sentença penal, agrupados temporariamente em “Estrutura da Sentença”.</p>
-<details class="topic" open><summary>Estrutura da Sentença <small>4 pílulas</small></summary><div class="topic-body">
-<article class="pill"><h3><span class="id">PEN-02</span>Substituição da pena: combinar arts. 44 e 46 do CP</h3><p class="trigger"><strong>Gatilho:</strong> escolha da espécie de pena restritiva de direitos.</p><p>Depois de verificar o cabimento da substituição (art. 44), confira se a modalidade escolhida é legalmente compatível com a condenação. A prestação de serviços à comunidade somente é aplicável às condenações <strong>superiores a seis meses</strong> (art. 46 do CP).</p><p class="alert"><strong>Armadilha:</strong> substituir pena de um mês por prestação de serviços à comunidade.</p></article>
-<article class="pill"><h3><span class="id">PEN-04</span>Dosimetria: evitar bis in idem</h3><p class="trigger"><strong>Gatilho:</strong> uma circunstância aparece em mais de uma fase da pena.</p><p>Controle onde cada dado foi valorado. No tráfico, natureza e quantidade exigem exame articulado com o art. 42 e, quando cabível o privilégio, com o art. 33, § 4º, da Lei 11.343/2006, observados os Temas 1.154 e 1.241/STJ e sua vigência temporal.</p><p class="alert"><strong>Armadilha:</strong> aumentar a pena-base e reduzir a fração do privilégio com a mesma circunstância, sem fundamento autônomo.</p></article>
-<article class="pill"><h3><span class="id">PEN-06</span>Contravenção anterior: antecedentes ≠ reincidência</h3><p class="trigger"><strong>Gatilho:</strong> certidão registra condenação definitiva anterior por contravenção.</p><p>Condenação por contravenção não gera reincidência pela prática posterior de crime (art. 63 do CP), mas pode configurar maus antecedentes (art. 59 do CP), com repercussão, por exemplo, no requisito de bons antecedentes do tráfico privilegiado.</p><p class="alert"><strong>Armadilha:</strong> utilizar a condenação contravencional como agravante de reincidência ou ignorar seus possíveis efeitos na pena-base.</p></article>
-<article class="pill"><h3><span class="id">PEN-13</span>Confissão e mínimo legal</h3><p class="trigger"><strong>Gatilho:</strong> confissão do acusado ou admissão de fatos relevantes.</p><p>Examinar a atenuante da confissão na segunda fase (art. 65, III, d, CP), à luz do Tema 1.194/STJ e do entendimento aplicável à época. Conferir a limitação da pena aquém do mínimo legal pela atenuante (Súmula 231/STJ), sem confundi-la com minorantes da terceira fase.</p><p class="alert"><strong>Armadilha:</strong> esquecer a atenuante ou reduzir a pena intermediária abaixo do mínimo legal sem enfrentar o entendimento consolidado.</p></article>
-</div></details>
-</section>
-<section class="panel" id="panel-especie" role="tabpanel" aria-labelledby="tab-especie" hidden>
-<h2>Crimes em Espécie</h2>
-<p class="description">Uma caixa por tema penal. As pílulas relacionadas a cada crime ficam reunidas em seu interior.</p>
-<details class="topic" open><summary>Tráfico de Drogas <small>3 pílulas</small></summary><div class="topic-body">
-<article class="pill"><h3><span class="id">PEN-01</span>Interestadualidade: conferir a Súmula 587/STJ</h3><p class="trigger"><strong>Gatilho:</strong> identificação da origem, destino ou rota da droga.</p><p>Verifique a majorante do art. 40, V, da Lei 11.343/2006. A efetiva transposição da divisa estadual não é exigida, mas deve haver demonstração inequívoca da intenção de tráfico interestadual (Súmula 587/STJ).</p><p class="alert"><strong>Armadilha:</strong> afastar a majorante apenas porque a apreensão precedeu a fronteira.</p></article>
-<article class="pill"><h3><span class="id">PEN-03</span>Tráfico privilegiado: fundamentar incidência e fração</h3><p class="trigger"><strong>Gatilho:</strong> art. 33, § 4º, da Lei 11.343/2006.</p><p>Conferir primariedade, bons antecedentes, ausência de dedicação criminosa e de integração em organização criminosa. Fundamentar a fração escolhida, sem presumir 2/3. Avaliar quantidade excepcional e os Temas 1.154 e 1.241/STJ segundo sua aplicação temporal, evitando dupla valoração.</p><p class="alert"><strong>Armadilha:</strong> conceder a redução máxima automaticamente ou negar o privilégio sem fundamentação concreta.</p></article>
-<article class="pill"><h3><span class="id">PEN-10</span>Instrumento de trabalho não impede automaticamente o perdimento</h3><p class="trigger"><strong>Gatilho:</strong> apreensão de veículo utilizado no tráfico e pedido de restituição.</p><p>Examine o nexo do bem com o tráfico, os direitos de terceiros de boa-fé e os pressupostos do perdimento. O Tema 647/STF dispensa prova de habitualidade, reiteração ou adaptação especial do veículo. Decida expressamente a restituição e a destinação legal.</p><p class="alert"><strong>Armadilha:</strong> restituir automaticamente o veículo por ser instrumento de trabalho ou ignorar o pedido defensivo.</p></article>
-</div></details>
-<details class="topic"><summary>Desobediência <small>1 pílula</small></summary><div class="topic-body">
-<article class="pill"><h3><span class="id">PEN-07</span>Fuga não se confunde com ordem descumprida</h3><p class="trigger"><strong>Gatilho:</strong> fuga de abordagem policial.</p><p>Identifique ordem legal concreta, sua comunicação e o descumprimento voluntário. A recusa de ordem de parada em policiamento ostensivo pode caracterizar desobediência (Tema 1.060/STJ), mas a fuga sorrateira sem ordem demonstrada exige análise distinta (art. 330 do CP).</p><p class="alert"><strong>Armadilha:</strong> presumir desobediência a partir de qualquer fuga.</p></article>
-</div></details>
-<details class="topic"><summary>Uso de Documento Falso <small>1 pílula</small></summary><div class="topic-body">
-<article class="pill"><h3><span class="id">PEN-08</span>Não exigir prejuízo efetivo</h3><p class="trigger"><strong>Gatilho:</strong> apresentação consciente de documento falsificado.</p><p>O delito do art. 304 do CP é formal: verificar falsidade, aptidão enganosa, uso consciente e natureza do documento para definir a pena. A consumação não exige prejuízo concreto nem sucesso da fraude.</p><p class="alert"><strong>Armadilha:</strong> absolver apenas porque a falsificação foi descoberta ou não causou prejuízo.</p></article>
-</div></details>
-<details class="topic"><summary>Favorecimento Pessoal <small>1 pílula</small></summary><div class="topic-body">
-<article class="pill"><h3><span class="id">PEN-09</span>Conferir o rol de parentes da isenção</h3><p class="trigger"><strong>Gatilho:</strong> ocultação de criminoso por familiar.</p><p>A isenção do art. 348, § 2º, do CP abrange ascendente, descendente, cônjuge e irmão, não o primo. Verifique o dolo e a finalidade de subtrair o autor à ação da autoridade.</p><p class="alert"><strong>Armadilha:</strong> estender a isenção legal indistintamente a parentes próximos.</p></article>
-</div></details>
-
-</section>
-<p class="note"><strong>Governança:</strong> lote inicial de dez pílulas expressamente aprovado. Organização provisória; nenhuma estrutura definitiva de sentença criminal foi criada. Verificar legislação e precedentes na data de cada prova. Não se publicam manuscritos, notas ou informações pessoais.</p>
-</main>
-<footer>Palácios da Memória · Magistratura</footer>
+<div class="portal-return"><a href="../" aria-label="Voltar ao seletor de Palácios">← Voltar aos Palácios</a></div>
+<header class="hero"><div class="brand"><div class="emblem" aria-hidden="true">⚖</div><div><div class="kicker">Palácio Criminal · Acervo provisório</div><h1>Sentença Criminal</h1><p>Pílulas organizadas por tema · estrutura definitiva em preparação</p></div></div>
+<div class="controls"><input type="search" id="search" aria-label="Buscar nas pílulas" placeholder="Buscar pílula, artigo ou tema"><button type="button" class="action" id="collapse">Recolher ramificações</button><span class="chip" id="stats">10 pílulas</span></div></header>
+<section class="intro"><p id="guidance"><strong>Estrutura Geral:</strong> selecione a âncora e percorra as pílulas conectadas. Clique em cada pílula para abrir seu conteúdo em um painel à direita.</p><span class="stats">10 pílulas aprovadas · teste JusTutor 01</span></section>
+<nav class="view-tabs" role="tablist" aria-label="Visões da Sentença Criminal">
+<button class="view-tab" role="tab" id="tab-general" aria-controls="viewport" aria-selected="true" tabindex="0">Estrutura Geral</button>
+<button class="view-tab" role="tab" id="tab-topics" aria-controls="viewport" aria-selected="false" tabindex="-1">Crimes em Espécie</button>
+</nav>
+<main class="viewport" id="viewport" role="tabpanel" aria-labelledby="tab-general" aria-label="Fluxograma de pílulas da Sentença Criminal"><div class="flow" id="flow" aria-label="Âncoras temáticas e caixas conectadas"></div></main>
+<footer class="footer">Palácio Criminal · Módulo provisório com dez pílulas aprovadas · A estrutura integral ainda será desenvolvida e conferida.</footer>
+<script type="application/json" id="pills-data">[{"id":"estrutura","category":"Estrutura da Sentença","subtitle":"Checklist transversal da sentença criminal","concept":"Conferências comuns a diferentes crimes, aplicáveis à dosimetria e às decisões finais.","pills":[{"id":"PEN-02","title":"Substituição da pena: combinar arts. 44 e 46 do CP","trigger":"escolha da espécie de pena restritiva de direitos.","content":"Depois de verificar o cabimento da substituição (art. 44), confira se a modalidade escolhida é legalmente compatível com a condenação. A prestação de serviços à comunidade somente é aplicável às condenações \u003cstrong>superiores a seis meses\u003c/strong> (art. 46 do CP).","alert":"substituir pena de um mês por prestação de serviços à comunidade."},{"id":"PEN-04","title":"Dosimetria: evitar bis in idem","trigger":"uma circunstância aparece em mais de uma fase da pena.","content":"Controle onde cada dado foi valorado. No tráfico, natureza e quantidade exigem exame articulado com o art. 42 e, quando cabível o privilégio, com o art. 33, § 4º, da Lei 11.343/2006, observados os Temas 1.154 e 1.241/STJ e sua vigência temporal.","alert":"aumentar a pena-base e reduzir a fração do privilégio com a mesma circunstância, sem fundamento autônomo."},{"id":"PEN-06","title":"Contravenção anterior: antecedentes ≠ reincidência","trigger":"certidão registra condenação definitiva anterior por contravenção.","content":"Condenação por contravenção não gera reincidência pela prática posterior de crime (art. 63 do CP), mas pode configurar maus antecedentes (art. 59 do CP), com repercussão, por exemplo, no requisito de bons antecedentes do tráfico privilegiado.","alert":"utilizar a condenação contravencional como agravante de reincidência ou ignorar seus possíveis efeitos na pena-base."},{"id":"PEN-13","title":"Confissão e mínimo legal","trigger":"confissão do acusado ou admissão de fatos relevantes.","content":"Examinar a atenuante da confissão na segunda fase (art. 65, III, d, CP), à luz do Tema 1.194/STJ e do entendimento aplicável à época. Conferir a limitação da pena aquém do mínimo legal pela atenuante (Súmula 231/STJ), sem confundi-la com minorantes da terceira fase.","alert":"esquecer a atenuante ou reduzir a pena intermediária abaixo do mínimo legal sem enfrentar o entendimento consolidado."}]},{"id":"crime-1","category":"Tráfico de Drogas","subtitle":"Pílulas de Tráfico de Drogas","concept":"Abra os alertas específicos do delito e veja fundamentos, gatilhos e armadilhas.","pills":[{"id":"PEN-01","title":"Interestadualidade: conferir a Súmula 587/STJ","trigger":"identificação da origem, destino ou rota da droga.","content":"Verifique a majorante do art. 40, V, da Lei 11.343/2006. A efetiva transposição da divisa estadual não é exigida, mas deve haver demonstração inequívoca da intenção de tráfico interestadual (Súmula 587/STJ).","alert":"afastar a majorante apenas porque a apreensão precedeu a fronteira."},{"id":"PEN-03","title":"Tráfico privilegiado: fundamentar incidência e fração","trigger":"art. 33, § 4º, da Lei 11.343/2006.","content":"Conferir primariedade, bons antecedentes, ausência de dedicação criminosa e de integração em organização criminosa. Fundamentar a fração escolhida, sem presumir 2/3. Avaliar quantidade excepcional e os Temas 1.154 e 1.241/STJ segundo sua aplicação temporal, evitando dupla valoração.","alert":"conceder a redução máxima automaticamente ou negar o privilégio sem fundamentação concreta."},{"id":"PEN-10","title":"Instrumento de trabalho não impede automaticamente o perdimento","trigger":"apreensão de veículo utilizado no tráfico e pedido de restituição.","content":"Examine o nexo do bem com o tráfico, os direitos de terceiros de boa-fé e os pressupostos do perdimento. O Tema 647/STF dispensa prova de habitualidade, reiteração ou adaptação especial do veículo. Decida expressamente a restituição e a destinação legal.","alert":"restituir automaticamente o veículo por ser instrumento de trabalho ou ignorar o pedido defensivo."}]},{"id":"crime-2","category":"Desobediência","subtitle":"Pílulas de Desobediência","concept":"Abra os alertas específicos do delito e veja fundamentos, gatilhos e armadilhas.","pills":[{"id":"PEN-07","title":"Fuga não se confunde com ordem descumprida","trigger":"fuga de abordagem policial.","content":"Identifique ordem legal concreta, sua comunicação e o descumprimento voluntário. A recusa de ordem de parada em policiamento ostensivo pode caracterizar desobediência (Tema 1.060/STJ), mas a fuga sorrateira sem ordem demonstrada exige análise distinta (art. 330 do CP).","alert":"presumir desobediência a partir de qualquer fuga."}]},{"id":"crime-3","category":"Uso de Documento Falso","subtitle":"Pílulas de Uso de Documento Falso","concept":"Abra os alertas específicos do delito e veja fundamentos, gatilhos e armadilhas.","pills":[{"id":"PEN-08","title":"Não exigir prejuízo efetivo","trigger":"apresentação consciente de documento falsificado.","content":"O delito do art. 304 do CP é formal: verificar falsidade, aptidão enganosa, uso consciente e natureza do documento para definir a pena. A consumação não exige prejuízo concreto nem sucesso da fraude.","alert":"absolver apenas porque a falsificação foi descoberta ou não causou prejuízo."}]},{"id":"crime-4","category":"Favorecimento Pessoal","subtitle":"Pílulas de Favorecimento Pessoal","concept":"Abra os alertas específicos do delito e veja fundamentos, gatilhos e armadilhas.","pills":[{"id":"PEN-09","title":"Conferir o rol de parentes da isenção","trigger":"ocultação de criminoso por familiar.","content":"A isenção do art. 348, § 2º, do CP abrange ascendente, descendente, cônjuge e irmão, não o primo. Verifique o dolo e a finalidade de subtrair o autor à ação da autoridade.","alert":"estender a isenção legal indistintamente a parentes próximos."}]}]</script>
 <script>
-const tabs=[...document.querySelectorAll('[role="tab"]')];
-const panels=[...document.querySelectorAll('[role="tabpanel"]')];
-function activate(tab,focus=false){tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1});panels.forEach(p=>{p.hidden=p.id!==tab.getAttribute('aria-controls')});if(focus)tab.focus()}
-tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>activate(tab));tab.addEventListener('keydown',e=>{let j=i;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;else return;e.preventDefault();activate(tabs[j],true)})});
+const ALL=JSON.parse(document.querySelector('#pills-data').textContent);
+const flow=document.querySelector('#flow'), viewport=document.querySelector('#viewport');
+let view='general',activeAnchor='estrutura',activePill='PEN-02',query='';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const plain=s=>String(s??'').replace(/<[^>]*>/g,'').replace(/&[^;]+;/g,' ');
+const fold=s=>plain(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function visible(){return view==='general'?[ALL[0]]:ALL.slice(1)}
+function toggleAnchor(id){if(activeAnchor===id){activeAnchor=null;activePill=null}else{activeAnchor=id;activePill=ALL.find(g=>g.id===id)?.pills[0]?.id||null}render()}
+function selectPill(id){activePill=activePill===id?null:id;render()}
+function render(){
+ const data=visible(),q=fold(query);
+ document.querySelector('#stats').textContent=(view==='general'?'1 âncora':'4 temas')+' · 10 pílulas no acervo';
+ document.querySelector('#guidance').innerHTML=view==='general'?'<strong>Estrutura Geral:</strong> abra a caixa “Estrutura da Sentença”, escolha uma pílula e consulte o fundamento na terceira coluna.':'<strong>Crimes em Espécie:</strong> cada delito possui uma âncora própria e pílulas conectadas à direita. Abra a pílula para consultar regra, gatilho e armadilha.';
+ document.querySelector('#tab-general').setAttribute('aria-selected',String(view==='general'));
+ document.querySelector('#tab-topics').setAttribute('aria-selected',String(view==='topics'));
+ viewport.setAttribute('aria-labelledby',view==='general'?'tab-general':'tab-topics');
+ flow.innerHTML=data.map((g,i)=>{
+  const shown=g.pills.filter(p=>!q||fold([g.category,g.subtitle,p.id,p.title,p.trigger,p.content,p.alert].join(' ')).includes(q));
+  if(q&&!shown.length&&!fold(g.category).includes(q))return '';
+  const isOpen=g.id===activeAnchor;
+  const selected=shown.find(p=>p.id===activePill);
+  const list=isOpen?'<div class="branch-list"><div class="branch-heading"><strong>Desdobramentos</strong><small>'+shown.length+' pílulas</small></div>'+shown.map((p,j)=>'<button type="button" class="spin-item '+(selected?.id===p.id?'active':'')+'" aria-pressed="'+(selected?.id===p.id)+'" onclick="selectPill(\''+esc(p.id)+'\')"><span class="spin-symbol">◇</span><span><span class="spin-number">'+esc(p.id)+'</span><strong>'+esc(p.title)+'</strong><small>Ver fundamento e armadilha</small></span></button>').join('')+'</div>':'';
+  const detail=selected?'<aside class="detail-panel"><button type="button" class="detail-close" aria-label="Fechar detalhe" onclick="selectPill(\''+esc(selected.id)+'\')">×</button><div class="detail-eyebrow">Pílula · '+esc(g.category)+'</div><h2>'+esc(selected.title)+'</h2><div class="detail-norm">'+esc(selected.id)+' · Teste JusTutor 01</div><h3>Quando lembrar</h3><p>'+esc(selected.trigger)+'</p><h3>Regra e aplicação</h3><p>'+selected.content+'</p><div class="warning"><strong>Armadilha a evitar:</strong> '+esc(selected.alert)+'</div></aside>':'';
+  return '<div class="flow-row" id="row-'+esc(g.id)+'"><button type="button" class="anchor-box '+(isOpen?'active':'')+'" aria-expanded="'+isOpen+'" aria-controls="branch-'+esc(g.id)+'" onclick="toggleAnchor(\''+esc(g.id)+'\')"><span class="anchor-head"><span class="anchor-no">'+(view==='general'?'G':String(i+1).padStart(2,'0'))+'</span><span class="anchor-info"><span class="anchor-name">'+esc(g.category)+'</span><span class="anchor-caption">'+esc(g.subtitle)+'</span></span><span class="anchor-toggle" aria-hidden="true">'+(isOpen?'−':'+')+'</span></span><span class="anchor-concept">'+esc(g.concept)+'</span></button><div class="branch-area '+(isOpen?'':'empty')+'" id="branch-'+esc(g.id)+'">'+list+detail+'</div></div>'
+ }).join('');
+ if(!flow.innerHTML.trim())flow.innerHTML='<p>Nenhuma pílula encontrada para essa busca.</p>';
+}
+function setView(next){view=next;const first=visible()[0];activeAnchor=first.id;activePill=first.pills[0].id;render()}
+document.querySelector('#tab-general').addEventListener('click',()=>setView('general'));
+document.querySelector('#tab-topics').addEventListener('click',()=>setView('topics'));
+document.querySelector('#search').addEventListener('input',e=>{query=e.target.value;render()});
+document.querySelector('#collapse').addEventListener('click',()=>{activeAnchor=null;activePill=null;render()});
+document.querySelectorAll('.view-tab').forEach((tab,i,tabs)=>tab.addEventListener('keydown',e=>{let n=i;if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i+tabs.length-1)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;else return;e.preventDefault();setView(n===0?'general':'topics');tabs[n].focus()}));
+render();
 </script>
-</body>
-</html>
+</body></html>
